@@ -1,0 +1,10 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions: []
+dictionaries: []
+words:
+  - hass
+  - hassio
+  - entites
+ignoreWords: []
+import: []
