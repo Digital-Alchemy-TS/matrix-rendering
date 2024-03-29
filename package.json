@@ -21,12 +21,16 @@
     "node": ">=20"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./app": "./dist/app/index.js"
   },
   "license": "MIT",
   "dependencies": {
     "@digital-alchemy/core": "^0.3.8",
+    "@digital-alchemy/fastify-extension": "^0.3.2",
     "dayjs": "^1.11.10",
+    "execa": "^8.0.1",
+    "jimp": "^0.22.12",
     "prom-client": "^15.1.0",
     "rpi-led-matrix": "^1.14.0",
     "ws": "^8.16.0"

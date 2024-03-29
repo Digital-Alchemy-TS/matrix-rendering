@@ -3,7 +3,16 @@ ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
+  - fastify
   - fillin
   - sonarjs
+  - alsa
+  - hmss
+  - hifi
+  - mplayer
+  - execa
+  - subdevice
+  - aplay
+  - subdevices
 ignoreWords: []
 import: []
