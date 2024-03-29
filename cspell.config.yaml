@@ -3,8 +3,7 @@ ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
-  - hass
-  - hassio
-  - entites
+  - fillin
+  - sonarjs
 ignoreWords: []
 import: []

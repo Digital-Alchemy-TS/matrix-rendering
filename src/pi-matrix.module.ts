@@ -1,16 +1,17 @@
-import { CreateLibrary } from "@digital-alchemy/core";
+import { CreateLibrary, StringConfig } from "@digital-alchemy/core";
 
-import { MatrixMath } from "./extensions";
+import { BorderSpin, PulseLaser } from "./animations";
+import { Line, MatrixMath, Text } from "./extensions";
 import { FONTS } from "./helpers/fonts";
 
 export const LIB_PI_MATRIX = CreateLibrary({
   configuration: {
     DEFAULT_FONT: {
-      default: "5x8" as FONTS,
+      default: "5x8",
       description:
         "What font should text rendering use if the widget does not provide one?",
       type: "string",
-    },
+    } as StringConfig<FONTS>,
     MATRIX_OPTIONS: {
       default: {},
       description: "See MatrixOptions in rpi-led-matrix",
@@ -46,7 +47,11 @@ export const LIB_PI_MATRIX = CreateLibrary({
   },
   name: "pi_matrix",
   services: {
+    BorderSpin,
+    PulseLaser,
+    line: Line,
     math: MatrixMath,
+    text: Text,
   },
 });
 
