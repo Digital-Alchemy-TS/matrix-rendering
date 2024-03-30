@@ -18,7 +18,7 @@ export function SoundController({
     });
 
     // * GET /sound/configuration
-    server.get("/widget/fonts", () => {
+    server.get("/sound/configuration", () => {
       return pi_matrix_app.sound.describeConfiguration();
     });
 

@@ -1,4 +1,4 @@
-import { RGB } from "./render-widget.dto";
+import { RGB } from ".";
 
 export type MatrixDimensionsResponse = {
   height: number;

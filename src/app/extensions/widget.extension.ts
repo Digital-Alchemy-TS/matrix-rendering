@@ -20,6 +20,7 @@ import {
   TextWidgetDTO,
   UNLOAD_WIDGETS,
 } from "../..";
+import { MATRIX_RENDER } from "../helpers/metrics";
 
 export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   function renderCircle({
@@ -94,7 +95,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     const font = pi_matrix_app.text.font(widget.font);
     if (!font) {
       logger.error(
-        `Failed to load font to render. Asked for {%s}`,
+        `failed to load font to render, asked for {%s}`,
         widget.font,
       );
       return;
@@ -125,6 +126,28 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     );
   }
 
+  /**
+   * order of operations in rendering
+   */
+  function prerender() {
+    const out = [] as GenericWidgetDTO[];
+    pi_matrix_app.sync.pre.forEach(value => {
+      out.push(...value);
+    });
+    return out;
+  }
+
+  /**
+   * order of operations in rendering
+   */
+  function postrender() {
+    const out = [] as GenericWidgetDTO[];
+    pi_matrix_app.sync.post.forEach(value => {
+      out.push(...value);
+    });
+    return out;
+  }
+
   const widget = {
     initWidgets(widgets: GenericWidgetDTO[]): void {
       widgets.forEach((widget: GenericWidgetDTO) => {
@@ -134,29 +157,30 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
         }
         if (["image"].includes(widget.type)) {
           const w = widget as ImageWidgetDTO;
-          image.loadImage(w.path, w);
+          pi_matrix_app.image.loadImage(w.path, w);
           return;
         }
         if (["gif"].includes(widget.type)) {
           const w = widget as ImageWidgetDTO;
-          image.loadAnimation(w);
+          pi_matrix_app.image.loadAnimation(w);
           return;
         }
         if (["rectangle", "line", "circle"].includes(widget.type)) {
           return;
         }
-        logger.warn(`Unknown widget type: {${widget.type}}`);
+        logger.warn(`unknown widget type: {${widget.type}}`);
       });
     },
 
     async render(): Promise<void> {
-      const list = [prerender, widgets, postrender].flat();
+      const list = [prerender(), widget.widgets, postrender()].flat();
       try {
         pi_matrix_app.instance.instance.clear();
         await eachSeries(
           list,
-          async widget => await widget.renderWidget(widget),
+          async widget => await pi_matrix_app.widget.renderWidget(widget),
         );
+        MATRIX_RENDER.inc();
         pi_matrix_app.instance.instance.sync();
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -168,7 +192,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
       switch (widget.type) {
         case "image": {
           const i = widget as ImageWidgetDTO;
-          image.render(i.path, i);
+          pi_matrix_app.image.render(i.path, i);
           return;
         }
         case "countdown": {

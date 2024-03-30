@@ -16,12 +16,12 @@ export function MatrixInstance({ config, lifecycle, logger }: TServiceParams) {
       }),
     );
     logger.info({ matrix, name: "onPostConfig", runtime }, `new [LedMatrix]`);
-    matrix.instance = new LedMatrix(
+    lexMatrix.instance = new LedMatrix(
       { ...LedMatrix.defaultMatrixOptions(), ...matrix },
       { ...LedMatrix.defaultRuntimeOptions(), ...runtime },
     );
   });
 
-  const matrix = { instance: undefined as LedMatrixInstance };
-  return matrix;
+  const lexMatrix = { instance: undefined as LedMatrixInstance };
+  return lexMatrix;
 }

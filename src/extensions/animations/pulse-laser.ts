@@ -23,7 +23,7 @@ import {
   LineWidgetDTO,
   PulseLaserOptions,
   RectangleWidgetDTO,
-} from "..";
+} from "../..";
 
 const INITIAL_FILLIN = 250;
 const MIN_FILLIN = 100;

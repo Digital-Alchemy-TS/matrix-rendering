@@ -41,7 +41,7 @@ export function hexToRGB(hex = "000000"): RGB {
 }
 
 export function isBright(color: string): boolean {
-  let { r, g, b } = this.hexToRGB(color);
+  let { r, g, b } = hexToRGB(color);
   r *= R_LUMINANCE;
   b *= B_LUMINANCE;
   g *= G_LUMINANCE;

@@ -1,4 +1,4 @@
-import { RGB } from "./render-widget.dto";
+import { RGB } from ".";
 
 /**
  * An attempt at a format that takes into account size as a payload

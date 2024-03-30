@@ -7,23 +7,25 @@ import { FONT_LIST } from "../extensions";
 export function WidgetController({
   lifecycle,
   fastify,
+  logger,
   pi_matrix_app,
 }: TServiceParams) {
   lifecycle.onBootstrap(() => {
     const server = fastify.bindings.httpServer;
+    logger.info(`/widget`);
 
-    // * GET /widget/
-    server.get("/widget/", () => {
+    logger.trace(`[GET] {%s}`, "/widget");
+    server.get("/widget", () => {
       return pi_matrix_app.widget.widgets;
     });
 
-    // * GET /widget/fonts
+    logger.trace(`[GET] {%s}`, "/widget/fonts");
     server.get("/widget/fonts", () => {
       return FONT_LIST;
     });
 
-    // * POST /widget/
-    server.post<{ Body: { dash: GenericWidgetDTO[] } }>("/widget/", request => {
+    logger.trace(`[POST] {%s}`, "/widget");
+    server.post<{ Body: { dash: GenericWidgetDTO[] } }>("/widget", request => {
       pi_matrix_app.widget.setWidgets(request.body.dash);
       return GENERIC_SUCCESS_RESPONSE;
     });

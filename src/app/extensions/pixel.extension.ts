@@ -2,6 +2,7 @@ import { TServiceParams } from "@digital-alchemy/core";
 import { LedMatrixInstance } from "rpi-led-matrix";
 
 import { SetPixelGrid } from "../..";
+import { MATRIX_RENDER } from "../helpers/metrics";
 const OFF = { b: 0, g: 0, r: 0 };
 
 export function Pixel({ pi_matrix_app, pi_matrix }: TServiceParams) {
@@ -31,6 +32,7 @@ export function Pixel({ pi_matrix_app, pi_matrix }: TServiceParams) {
         ),
       );
       pi_matrix_app.instance.instance.sync();
+      MATRIX_RENDER.inc();
     },
   };
 }

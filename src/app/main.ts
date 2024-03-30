@@ -12,6 +12,7 @@ import {
 import {
   BorderSpinQueueExtension,
   Countdown,
+  FastifyPlugins,
   Image,
   MatrixInstance,
   Pixel,
@@ -28,6 +29,7 @@ const PI_MATRIX = CreateApplication({
   name: "pi_matrix_app",
   services: {
     AnimationController,
+    FastifyPlugins,
     MatrixController,
     PixelController,
     SoundController,

@@ -97,7 +97,7 @@ export async function Image({
         hash(options.path),
       );
       if (!existsSync(cachePath)) {
-        logger.info(`Building frame cache for {${options.path}}`);
+        logger.info(`building frame cache for {${options.path}}`);
         mkdirSync(cachePath);
         // requires imagemagick as outside dependency
         // apt-get install imagemagick
@@ -124,7 +124,7 @@ export async function Image({
         logger.warn(`{${path}} does not exist`);
         return false;
       }
-      logger.debug(`Build {${path}}`);
+      logger.debug(`build {${path}}`);
       const file = await read(path);
       const [height, width] = getDimensions(file, options);
       const grid: Cell[][] = [];

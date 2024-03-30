@@ -5,7 +5,7 @@ import {
   CountdownOptions,
   PulseLaserOptions,
 } from "./animations";
-import { Colors } from "./colors";
+import { Colors, RGB } from "./colors";
 import { FONTS } from "./fonts";
 
 export type AnimatedBorderCallback<
@@ -24,7 +24,6 @@ export type WidgetType =
   | "rectangle"
   | "line";
 
-export type RGB = Record<"r" | "g" | "b", number>;
 export type ColorSetter = Colors | number | RGB;
 
 export class GenericWidgetDTO {

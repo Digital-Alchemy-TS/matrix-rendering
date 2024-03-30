@@ -1,4 +1,4 @@
-import { EMPTY, HOUR, MINUTE, SECOND, START } from "@digital-alchemy/utilities";
+import { EMPTY, HOUR, MINUTE, SECOND, START } from "@digital-alchemy/core";
 
 const NUMLEN = 2;
 const NUMLEN_MILLI = 4;

@@ -1,5 +1,7 @@
 import { TServiceParams } from "@digital-alchemy/core";
 
+import { MATRIX_RENDER_IMMEDIATE } from "../helpers/metrics";
+
 export const AFTER_SYNC = "after-sync";
 export type tAfterSync = (arguments_: {
   dt: number;
@@ -15,8 +17,15 @@ export function RenderExtension({
 }: TServiceParams) {
   let isRendering: boolean;
   let renderImmediate: boolean;
-  lifecycle.onReady(() => {
-    logger.info(`starting render loop`);
+  lifecycle.onPostConfig(() => {
+    logger.info(
+      { interval: config.pi_matrix.UPDATE_INTERVAL },
+      `starting render loop`,
+    );
+    scheduler.interval({
+      exec: async () => await render.render(),
+      interval: config.pi_matrix.UPDATE_INTERVAL,
+    });
     // ! This method cannot be async
     // ! matrix library will go 100% CPU and break everything
     pi_matrix_app.instance.instance.afterSync((_, dt, t) => {
@@ -27,16 +36,6 @@ export function RenderExtension({
         logger.debug(`render immediate`);
         setImmediate(async () => await render.render());
       }
-    });
-    scheduler.interval({
-      async exec() {
-        if (render.paused) {
-          // separate block here to prevent spam debug logs
-          return;
-        }
-        await render.render();
-      },
-      interval: config.pi_matrix.UPDATE_INTERVAL,
     });
   });
 
@@ -60,7 +59,9 @@ export function RenderExtension({
         return;
       }
       if (isRendering) {
+        logger.trace("setting [renderImmediate]");
         renderImmediate = true;
+        MATRIX_RENDER_IMMEDIATE.inc();
         return;
       }
       if (render.renderMode === "widget") {

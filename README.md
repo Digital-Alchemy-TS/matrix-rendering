@@ -4,3 +4,22 @@ This repository contains generic extensions for interacting with Home Assistant,
 
 - Extended docs: https://docs.digital-alchemy.app/Hass
 - [Discord](https://discord.com/invite/mtWHk36upW)
+
+## Example config
+
+> Matched to the [hardware build guide](https://docs.digital-alchemy.app/Pi+Matrix/Hardware+Build+Guide)
+
+```ini
+[pi_matrix.MATRIX_OPTIONS]
+  chainLength=10
+  cols=64
+  hardwareMapping=adafruit-hat
+  rows=32
+
+[pi_matrix.RUNTIME_OPTIONS]
+  gpioSlowdown=4
+  dropPrivileges=0
+
+[fastify]
+  PORT=7000
+```

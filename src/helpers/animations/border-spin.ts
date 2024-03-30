@@ -1,14 +1,9 @@
-import { IsDefined, IsNumber } from "class-validator";
-
 import { ColorSetter } from "../render-widget.dto";
 
 export class BorderSpinOptions {
-  @IsNumber()
   public brightness?: number;
-  @IsDefined()
   public colorA: ColorSetter;
   public colorB?: ColorSetter;
-  @IsNumber()
   public interval?: number;
   public padding?: number;
   public type?: "border-spin";

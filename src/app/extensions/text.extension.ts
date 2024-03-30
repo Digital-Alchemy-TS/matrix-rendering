@@ -22,7 +22,7 @@ export function Text({
 }: TServiceParams) {
   const fonts = new Map<string, FontInstance>();
   lifecycle.onPostConfig(() => {
-    FONT_LIST = readdirSync(this.root)
+    FONT_LIST = readdirSync(config.pi_matrix.FONTS_DIRECTORY)
       .filter(i => i.endsWith(EXT))
       .map(i => i.replace(`.${EXT}`, "") as FONTS);
   });

@@ -15,7 +15,8 @@
     "name": "Zoe Codez"
   },
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "assets/**/*"
   ],
   "engines": {
     "node": ">=20"
@@ -30,9 +31,12 @@
     "@digital-alchemy/fastify-extension": "^0.3.2",
     "dayjs": "^1.11.10",
     "execa": "^8.0.1",
+    "fastify": "^4.26.2",
+    "fastify-plugin": "^4.5.1",
     "jimp": "^0.22.12",
     "prom-client": "^15.1.0",
     "rpi-led-matrix": "^1.14.0",
+    "uuid": "^9.0.1",
     "ws": "^8.16.0"
   },
   "devDependencies": {

@@ -13,7 +13,7 @@ import {
   BorderSpinOptions,
   ColorSetter,
   LineWidgetDTO,
-} from "..";
+} from "../..";
 
 const DEFAULT_BORDER_INTERVAL = 10;
 const DEFAULT_BORDER_BRIGHTNESS = 50;

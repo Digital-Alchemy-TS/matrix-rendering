@@ -4,11 +4,12 @@ import { BorderSpinQueue, BorderSpinQueueItem } from "../..";
 type RunningItem = {
   stop: () => void;
 };
-export function BorderSpinQueueExtension({ logger, config }: TServiceParams) {
+export function BorderSpinQueueExtension({ logger }: TServiceParams) {
   let QUEUE = [] as BorderSpinQueueItem[];
   const RUNNING = new Map<number, RunningItem>();
 
   const queue = {
+    QUEUE,
     async add(data: BorderSpinQueue): Promise<void> {
       data.type ??= "auto";
       data.completeMode ??= "leave";
@@ -27,7 +28,7 @@ export function BorderSpinQueueExtension({ logger, config }: TServiceParams) {
           //
           return;
         default:
-          logger.error(`Unknown spin type: {${data.type}}`);
+          logger.error(`unknown spin type: {${data.type}}`);
       }
     },
     tick(): void {
