@@ -32,7 +32,7 @@ export function Pixel({ pi_matrix_app, pi_matrix }: TServiceParams) {
         ),
       );
       pi_matrix_app.instance.instance.sync();
-      MATRIX_RENDER.inc();
+      MATRIX_RENDER.labels({ type: "pixel" }).inc();
     },
   };
 }

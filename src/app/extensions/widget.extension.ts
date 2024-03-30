@@ -1,4 +1,4 @@
-import { eachSeries, EMPTY, TServiceParams } from "@digital-alchemy/core";
+import { eachSeries, EMPTY, NONE, TServiceParams } from "@digital-alchemy/core";
 import dayjs from "dayjs";
 import {
   HorizontalAlignment,
@@ -20,7 +20,7 @@ import {
   TextWidgetDTO,
   UNLOAD_WIDGETS,
 } from "../..";
-import { MATRIX_RENDER } from "../helpers/metrics";
+import { MATRIX_RENDER, MATRIX_RENDER_WIDGET_COUNT } from "../helpers/metrics";
 
 export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   function renderCircle({
@@ -35,6 +35,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
       .brightness(brightness)
       .drawCircle(x, y, r);
   }
+  const KNOWN_WIDGET_TYPES = new Set<string>();
 
   function renderCountdown({
     overflow = false,
@@ -180,7 +181,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
           list,
           async widget => await pi_matrix_app.widget.renderWidget(widget),
         );
-        MATRIX_RENDER.inc();
+        MATRIX_RENDER.labels({ type: "widget" }).inc();
         pi_matrix_app.instance.instance.sync();
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -227,11 +228,20 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
       }
     },
 
-    setWidgets(widgets: GenericWidgetDTO[]) {
+    setWidgets(incoming: GenericWidgetDTO[]) {
       pi_matrix_app.render.renderMode = "widget";
       event.emit(UNLOAD_WIDGETS);
-      widgets = widgets;
-      widget.initWidgets(widgets);
+      widget.widgets = incoming;
+      const counts = {} as Record<string, number>;
+      incoming.forEach(i => {
+        KNOWN_WIDGET_TYPES.add(i.type);
+        counts[i.type] ??= NONE;
+        counts[i.type]++;
+      });
+      KNOWN_WIDGET_TYPES.forEach(type =>
+        MATRIX_RENDER_WIDGET_COUNT.labels({ type }).set(counts[type] ?? NONE),
+      );
+      widget.initWidgets(incoming);
     },
 
     widgets: [
