@@ -6,12 +6,11 @@ import { collectDefaultMetrics } from "prom-client";
 
 import {
   HTTP_REQUEST_ERROR,
+  msOffset,
   REQUEST_DURATION_HISTOGRAM,
 } from "../helpers/metrics";
 
 const LATE_CONFIG = -1;
-const SECONDS_TO_MILLISECONDS = 1e3;
-const NANOSECONDS_TO_MILLISECONDS = 1e-6;
 
 export function FastifyPlugins({ logger, lifecycle, fastify }: TServiceParams) {
   lifecycle.onPostConfig(() => {
@@ -57,17 +56,14 @@ export function FastifyPlugins({ logger, lifecycle, fastify }: TServiceParams) {
             (request: FastifyRequest, _: FastifyReply, done) => {
               const start = requests.get(request);
               requests.delete(request);
-              const [seconds, nano] = hrtime(start);
-              const durationInMilliseconds =
-                seconds * SECONDS_TO_MILLISECONDS +
-                nano * NANOSECONDS_TO_MILLISECONDS;
+              const durationInMilliseconds = msOffset(start);
 
               const path = request.routeOptions.url || request.raw.url;
               logger.debug(
                 { name: request.method },
                 `[%s] - {%s}ms`,
                 path,
-                durationInMilliseconds,
+                Math.floor(durationInMilliseconds * SIGFIG) / SIGFIG,
               );
               REQUEST_DURATION_HISTOGRAM.observe(
                 { method: request.method, route: path },
@@ -82,3 +78,5 @@ export function FastifyPlugins({ logger, lifecycle, fastify }: TServiceParams) {
     );
   }, LATE_CONFIG);
 }
+
+const SIGFIG = 100;

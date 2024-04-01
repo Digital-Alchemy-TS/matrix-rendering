@@ -1,5 +1,6 @@
 import { eachSeries, EMPTY, NONE, TServiceParams } from "@digital-alchemy/core";
 import dayjs from "dayjs";
+import { hrtime } from "process";
 import {
   HorizontalAlignment,
   LayoutUtils,
@@ -20,7 +21,12 @@ import {
   TextWidgetDTO,
   UNLOAD_WIDGETS,
 } from "../..";
-import { MATRIX_RENDER, MATRIX_RENDER_WIDGET_COUNT } from "../helpers/metrics";
+import {
+  MATRIX_RENDER_WIDGET_COUNT,
+  msOffset,
+  RENDER_DURATION_HISTOGRAM,
+  WIDGET_RENDER_PHASE,
+} from "../helpers";
 
 export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   function renderCircle({
@@ -176,13 +182,25 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     async render(): Promise<void> {
       const list = [prerender(), widget.widgets, postrender()].flat();
       try {
+        const start = hrtime();
         pi_matrix_app.instance.instance.clear();
+        WIDGET_RENDER_PHASE.labels({ phase: "clear" }).observe(msOffset(start));
+        const assemble = hrtime();
         await eachSeries(
           list,
           async widget => await pi_matrix_app.widget.renderWidget(widget),
         );
-        MATRIX_RENDER.labels({ type: "widget" }).inc();
+        WIDGET_RENDER_PHASE.labels({ phase: "write" }).observe(
+          msOffset(assemble),
+        );
+        const syncStart = hrtime();
         pi_matrix_app.instance.instance.sync();
+        WIDGET_RENDER_PHASE.labels({ phase: "sync" }).observe(
+          msOffset(syncStart),
+        );
+        RENDER_DURATION_HISTOGRAM.labels({ type: "widget" }).observe(
+          msOffset(start),
+        );
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
