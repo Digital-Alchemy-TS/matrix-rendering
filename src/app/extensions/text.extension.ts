@@ -18,11 +18,11 @@ export function Text({
   config,
   lifecycle,
   logger,
-  pi_matrix,
+  matrix_rendering,
 }: TServiceParams) {
   const fonts = new Map<string, FontInstance>();
   lifecycle.onPostConfig(() => {
-    FONT_LIST = readdirSync(config.pi_matrix.FONTS_DIRECTORY)
+    FONT_LIST = readdirSync(config.matrix_rendering.FONTS_DIRECTORY)
       .filter(i => i.endsWith(EXT))
       .map(i => i.replace(`.${EXT}`, "") as FONTS);
   });
@@ -36,16 +36,19 @@ export function Text({
       logger.error(
         `[%s] font did not load, falling back to default {%s}`,
         font,
-        config.pi_matrix.DEFAULT_FONT,
+        config.matrix_rendering.DEFAULT_FONT,
       );
-      return text.font(config.pi_matrix.DEFAULT_FONT);
+      return text.font(config.matrix_rendering.DEFAULT_FONT);
     },
 
     load(name: FONTS): void {
       if (fonts.has(name)) {
         return;
       }
-      const file = join(config.pi_matrix.FONTS_DIRECTORY, `${name}.${EXT}`);
+      const file = join(
+        config.matrix_rendering.FONTS_DIRECTORY,
+        `${name}.${EXT}`,
+      );
       if (!existsSync(file)) {
         logger.error({ file }, `[%s] cannot find font`, name);
         return;
@@ -59,7 +62,9 @@ export function Text({
     },
 
     render(widget: Partial<TextWidgetDTO>): void {
-      const font = fonts.get(widget.font ?? config.pi_matrix.DEFAULT_FONT);
+      const font = fonts.get(
+        widget.font ?? config.matrix_rendering.DEFAULT_FONT,
+      );
       const glyphs = LayoutUtils.linesToMappedGlyphs(
         LayoutUtils.textToLines(
           font,
@@ -75,7 +80,7 @@ export function Text({
       pi_matrix_app.instance.instance
         .font(font)
         .fgColor(widget.color ?? Colors.White)
-        .brightness(pi_matrix.math.containBrightness(widget.brightness));
+        .brightness(matrix_rendering.math.containBrightness(widget.brightness));
 
       glyphs.forEach(({ x, y, char }) =>
         pi_matrix_app.instance.instance.drawText(

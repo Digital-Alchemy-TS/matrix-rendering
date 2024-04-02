@@ -51,7 +51,7 @@ interface Step2 {
 
 type ExecOptions = PulseLaserOptions & { callback: AnimatedBorderCallback };
 
-export function PulseLaser({ pi_matrix }: TServiceParams) {
+export function PulseLaser({ matrix_rendering }: TServiceParams) {
   async function step1({
     callback,
     color,
@@ -114,7 +114,11 @@ export function PulseLaser({ pi_matrix }: TServiceParams) {
       y: yTop,
     };
     callback([top, bottom]);
-    for (let i = START; i < pi_matrix.math.totalWidth - ARRAY_OFFSET; i++) {
+    for (
+      let i = START;
+      i < matrix_rendering.math.totalWidth - ARRAY_OFFSET;
+      i++
+    ) {
       await wait();
       bottom.endX++;
       top.endX++;
@@ -130,8 +134,8 @@ export function PulseLaser({ pi_matrix }: TServiceParams) {
     row,
     brightness,
   }: ExecOptions): Promise<void> {
-    const x = row * pi_matrix.math.totalWidth;
-    const endX = x + pi_matrix.math.totalWidth - ARRAY_OFFSET;
+    const x = row * matrix_rendering.math.totalWidth;
+    const endX = x + matrix_rendering.math.totalWidth - ARRAY_OFFSET;
     const background = beam.map((_, index) => {
       return {
         brightness: HALF * brightness,
@@ -183,8 +187,10 @@ export function PulseLaser({ pi_matrix }: TServiceParams) {
       LineWidgetDTO | RectangleWidgetDTO
     >;
     callback(merged);
-    const movingStart = Math.floor(pi_matrix.math.totalWidth * TWO_THIRDS);
-    const max = x + pi_matrix.math.totalWidth;
+    const movingStart = Math.floor(
+      matrix_rendering.math.totalWidth * TWO_THIRDS,
+    );
+    const max = x + matrix_rendering.math.totalWidth;
     let added = false;
     const mask = {
       color: Colors.Black,
@@ -197,7 +203,11 @@ export function PulseLaser({ pi_matrix }: TServiceParams) {
     } as RectangleWidgetDTO;
     delay = HALF * WAIT_INTERVAL;
 
-    for (let i = START; i < pi_matrix.math.totalWidth + movingStart; i++) {
+    for (
+      let i = START;
+      i < matrix_rendering.math.totalWidth + movingStart;
+      i++
+    ) {
       await sleep(delay);
       foreground.forEach(line => {
         if (line.endX < max - ARRAY_OFFSET) {
@@ -226,7 +236,7 @@ export function PulseLaser({ pi_matrix }: TServiceParams) {
 
   return async function (options: ExecOptions): Promise<void> {
     const { callback, step1Color, y, beam, row, brightness } = options;
-    const x = row * pi_matrix.math.totalWidth;
+    const x = row * matrix_rendering.math.totalWidth;
     // Step 1: left side expand from point vertically
     await step1({
       callback,

@@ -1,6 +1,6 @@
 {
-  "name": "@digital-alchemy/pi-matrix",
-  "repository": "https://github.com/Digital-Alchemy-TS/pi-matrix",
+  "name": "@digital-alchemy/matrix-rendering",
+  "repository": "https://github.com/Digital-Alchemy-TS/matrix-rendering",
   "homepage": "https://docs.digital-alchemy.app/Pi-Matrix",
   "version": "0.3.0",
   "scripts": {

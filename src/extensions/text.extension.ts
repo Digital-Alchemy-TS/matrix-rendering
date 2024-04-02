@@ -36,7 +36,7 @@ interface LineConfig {
 
 const DEFAULT_HEIGHT = 6;
 
-export function Text({ pi_matrix }: TServiceParams) {
+export function Text({ matrix_rendering }: TServiceParams) {
   let lines: LineInfo[] = [];
 
   return {
@@ -68,8 +68,8 @@ export function Text({ pi_matrix }: TServiceParams) {
           }
           previous = y;
           y += height + lineHeight;
-          if (y > pi_matrix.math.panelHeight) {
-            x += pi_matrix.math.totalWidth;
+          if (y > matrix_rendering.math.panelHeight) {
+            x += matrix_rendering.math.totalWidth;
             previous = EMPTY;
             y = height + lineHeight;
           }

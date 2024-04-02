@@ -9,7 +9,7 @@ import {
 } from "../..";
 
 export function SyncAnimation({
-  pi_matrix,
+  matrix_rendering,
   pi_matrix_app,
   logger,
 }: TServiceParams) {
@@ -37,7 +37,7 @@ export function SyncAnimation({
       }
       switch (animation.animationOptions.type) {
         case "border-spin": {
-          await pi_matrix.border_spin({
+          await matrix_rendering.border_spin({
             ...animation.animationOptions,
             callback,
           });
@@ -51,7 +51,7 @@ export function SyncAnimation({
           break;
         }
         case "pulse-laser": {
-          await pi_matrix.pulse_laser({
+          await matrix_rendering.pulse_laser({
             ...animation.animationOptions,
             callback,
           });

@@ -4,7 +4,7 @@ export function MatrixController({
   lifecycle,
   fastify,
   logger,
-  pi_matrix,
+  matrix_rendering,
 }: TServiceParams) {
   lifecycle.onBootstrap(() => {
     const server = fastify.bindings.httpServer;
@@ -13,8 +13,8 @@ export function MatrixController({
     logger.trace(`[GET] {%s}`, "/matrix/dimensions");
     server.get("/matrix/dimensions", () => {
       return {
-        height: pi_matrix.math.totalHeight,
-        width: pi_matrix.math.totalWidth,
+        height: matrix_rendering.math.totalHeight,
+        width: matrix_rendering.math.totalWidth,
       };
     });
   });

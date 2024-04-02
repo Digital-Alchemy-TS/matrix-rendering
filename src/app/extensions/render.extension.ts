@@ -19,12 +19,12 @@ export function RenderExtension({
   let renderImmediate: boolean;
   lifecycle.onPostConfig(() => {
     logger.info(
-      { interval: config.pi_matrix.UPDATE_INTERVAL },
+      { interval: config.matrix_rendering.UPDATE_INTERVAL },
       `starting render loop`,
     );
     scheduler.interval({
       exec: async () => await render.render(),
-      interval: config.pi_matrix.UPDATE_INTERVAL,
+      interval: config.matrix_rendering.UPDATE_INTERVAL,
     });
     // ! This method cannot be async
     // ! matrix library will go 100% CPU and break everything

@@ -29,7 +29,7 @@ type LineOptions = {
   totalWidth: number;
 };
 
-export function BorderSpin({ pi_matrix }: TServiceParams) {
+export function BorderSpin({ matrix_rendering }: TServiceParams) {
   function growBottomRightLeft({
     time,
     padding,
@@ -37,19 +37,20 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "totalHeight" | "totalWidth">) {
-    const shift = pi_matrix.math.bottom * pi_matrix.math.totalWidth;
-    const min = shift + padding - pi_matrix.math.totalWidth;
+    const shift =
+      matrix_rendering.math.bottom * matrix_rendering.math.totalWidth;
+    const min = shift + padding - matrix_rendering.math.totalWidth;
     const left = shift - padding - Math.ceil(time * diff);
     const out = {
       brightness,
       color,
       // right
       endX: shift - padding - ARRAY_OFFSET,
-      endY: pi_matrix.math.panelHeight - SINGLE - padding,
+      endY: matrix_rendering.math.panelHeight - SINGLE - padding,
       type: "line",
       // left
       x: left < min ? min : left,
-      y: pi_matrix.math.panelHeight - SINGLE - padding,
+      y: matrix_rendering.math.panelHeight - SINGLE - padding,
     } as LineWidgetDTO;
     return out;
   }
@@ -61,7 +62,7 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "diff" | "totalWidth">) {
-    return pi_matrix.line
+    return matrix_rendering.line
       .bottomToTop(padding, Math.min(time, totalHeight), padding)
       .map(i => ({ ...i, brightness, color, type: "line" }) as LineWidgetDTO);
   }
@@ -73,10 +74,10 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     totalHeight,
     color,
   }: Omit<LineOptions, "diff" | "totalWidth">) {
-    return pi_matrix.line
+    return matrix_rendering.line
       .topToBottom(
         // ARRAY_OFFSET because grid is 0 indexed, and we need flush
-        pi_matrix.math.totalWidth - ARRAY_OFFSET - padding,
+        matrix_rendering.math.totalWidth - ARRAY_OFFSET - padding,
         Math.min(time, totalHeight),
         padding,
       )
@@ -108,18 +109,19 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "offset" | "totalWidth">) {
-    const shift = pi_matrix.math.bottom * pi_matrix.math.totalWidth;
+    const shift =
+      matrix_rendering.math.bottom * matrix_rendering.math.totalWidth;
     const right = shift - Math.ceil(time * diff) - padding;
     const out = {
       brightness,
       color,
       // right
       endX: right,
-      endY: pi_matrix.math.panelHeight - SINGLE - padding,
+      endY: matrix_rendering.math.panelHeight - SINGLE - padding,
       type: "line",
       // left
-      x: shift - pi_matrix.math.totalWidth + padding,
-      y: pi_matrix.math.panelHeight - SINGLE - padding,
+      x: shift - matrix_rendering.math.totalWidth + padding,
+      y: matrix_rendering.math.panelHeight - SINGLE - padding,
     } as LineWidgetDTO;
     return out;
   }
@@ -131,7 +133,7 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "diff" | "offset" | "totalWidth">) {
-    return pi_matrix.line
+    return matrix_rendering.line
       .topToBottom(padding, totalHeight - time, padding)
       .map(i => ({ ...i, brightness, color, type: "line" }) as LineWidgetDTO);
   }
@@ -142,11 +144,11 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "diff" | "offset">) {
-    return pi_matrix.line
+    return matrix_rendering.line
       .bottomToTop(
         //
-        pi_matrix.math.totalWidth - padding - ARRAY_OFFSET,
-        pi_matrix.math.bottom * pi_matrix.math.panelHeight - time,
+        matrix_rendering.math.totalWidth - padding - ARRAY_OFFSET,
+        matrix_rendering.math.bottom * matrix_rendering.math.panelHeight - time,
         padding,
       )
       .map(i => ({ ...i, brightness, color, type: "line" }) as LineWidgetDTO);
@@ -168,7 +170,8 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
       type: "line",
       // right
       x:
-        pi_matrix.math.totalWidth * (pi_matrix.math.columns - SINGLE) -
+        matrix_rendering.math.totalWidth *
+          (matrix_rendering.math.columns - SINGLE) -
         padding -
         ARRAY_OFFSET,
       y: START + padding,
@@ -189,11 +192,12 @@ export function BorderSpin({ pi_matrix }: TServiceParams) {
     let color = colorA;
     const bothSidesPadding = padding * BOTH_SIDES;
     const totalHeight =
-      pi_matrix.math.panelHeight *
-        (pi_matrix.math.panelTotal / pi_matrix.math.columns) -
+      matrix_rendering.math.panelHeight *
+        (matrix_rendering.math.panelTotal / matrix_rendering.math.columns) -
       bothSidesPadding;
     const totalWidth =
-      pi_matrix.math.panelWidth * pi_matrix.math.columns - bothSidesPadding;
+      matrix_rendering.math.panelWidth * matrix_rendering.math.columns -
+      bothSidesPadding;
     const diff = totalWidth / totalHeight;
     // ! Extend
     for (let time = START; time <= totalHeight; time++) {

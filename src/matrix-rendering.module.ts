@@ -12,7 +12,7 @@ import { NO_SOUND_DEVICE } from ".";
 import { BorderSpin, Line, MatrixMath, PulseLaser, Text } from "./extensions";
 import { FONTS } from "./helpers/fonts";
 
-export const LIB_PI_MATRIX = CreateLibrary({
+export const LIB_MATRIX_RENDERING = CreateLibrary({
   configuration: {
     ANIMATION_CACHE_DIRECTORY: {
       default: "/tmp/rgb-matrix/animations",
@@ -97,7 +97,7 @@ export const LIB_PI_MATRIX = CreateLibrary({
       type: "number",
     },
   },
-  name: "pi_matrix",
+  name: "matrix_rendering",
   services: {
     border_spin: BorderSpin,
     line: Line,
@@ -109,6 +109,6 @@ export const LIB_PI_MATRIX = CreateLibrary({
 
 declare module "@digital-alchemy/core" {
   export interface LoadedModules {
-    pi_matrix: typeof LIB_PI_MATRIX;
+    matrix_rendering: typeof LIB_MATRIX_RENDERING;
   }
 }

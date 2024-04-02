@@ -72,7 +72,7 @@ export async function Image({
    * ! do not await this
    */
   async function manageAnimation({
-    interval = config.pi_matrix.DEFAULT_ANIMATION_INTERVAL,
+    interval = config.matrix_rendering.DEFAULT_ANIMATION_INTERVAL,
     frames,
     cachePath,
     ...options
@@ -93,7 +93,7 @@ export async function Image({
   const image = {
     async loadAnimation(options: GifWidgetDTO): Promise<void> {
       const cachePath = join(
-        config.pi_matrix.ANIMATION_CACHE_DIRECTORY,
+        config.matrix_rendering.ANIMATION_CACHE_DIRECTORY,
         hash(options.path),
       );
       if (!existsSync(cachePath)) {

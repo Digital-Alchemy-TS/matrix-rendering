@@ -14,17 +14,17 @@ export async function Sound({ config, logger }: TServiceParams) {
   const sound = {
     describeConfiguration(): SoundConfiguration {
       return {
-        directory: config.pi_matrix.SOUND_DIRECTORY,
+        directory: config.matrix_rendering.SOUND_DIRECTORY,
         files: sound.soundFileList(),
       };
     },
     async playSound({
       sound,
-      card = config.pi_matrix.DEFAULT_SOUND_DEVICE,
+      card = config.matrix_rendering.DEFAULT_SOUND_DEVICE,
     }: PlaySoundCommand): Promise<void> {
       sound = isAbsolute(sound)
         ? sound
-        : join(config.pi_matrix.SOUND_DIRECTORY, sound);
+        : join(config.matrix_rendering.SOUND_DIRECTORY, sound);
       if (card !== NO_SOUND_DEVICE) {
         logger.info(`[%s] playing on card {%s}`, sound, card);
         await execa("mplayer", ["-ao", `alsa:device=hw=${card}.0`, sound]);
@@ -35,7 +35,7 @@ export async function Sound({ config, logger }: TServiceParams) {
     },
 
     soundFileList(): string[] {
-      return readdirSync(config.pi_matrix.SOUND_DIRECTORY).filter(
+      return readdirSync(config.matrix_rendering.SOUND_DIRECTORY).filter(
         i => ![".", ".."].includes(i),
       );
     },

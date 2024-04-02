@@ -10,13 +10,13 @@ This repository contains generic extensions for interacting with Home Assistant,
 > Matched to the [hardware build guide](https://docs.digital-alchemy.app/Pi+Matrix/Hardware+Build+Guide)
 
 ```ini
-[pi_matrix.MATRIX_OPTIONS]
+[matrix_rendering.MATRIX_OPTIONS]
   chainLength=10
   cols=64
   hardwareMapping=adafruit-hat
   rows=32
 
-[pi_matrix.RUNTIME_OPTIONS]
+[matrix_rendering.RUNTIME_OPTIONS]
   gpioSlowdown=4
   dropPrivileges=0
 

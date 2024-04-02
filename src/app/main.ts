@@ -1,7 +1,7 @@
 import { CreateApplication } from "@digital-alchemy/core";
 import { LIB_FASTIFY } from "@digital-alchemy/fastify-extension";
 
-import { LIB_PI_MATRIX } from "..";
+import { LIB_MATRIX_RENDERING } from "..";
 import {
   AnimationController,
   MatrixController,
@@ -25,7 +25,7 @@ import {
 
 const PI_MATRIX = CreateApplication({
   configuration: {},
-  libraries: [LIB_FASTIFY, LIB_PI_MATRIX],
+  libraries: [LIB_FASTIFY, LIB_MATRIX_RENDERING],
   name: "pi_matrix_app",
   services: {
     AnimationController,
