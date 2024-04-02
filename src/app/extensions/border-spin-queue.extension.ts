@@ -10,6 +10,7 @@ export function BorderSpinQueueExtension({ logger }: TServiceParams) {
 
   const queue = {
     QUEUE,
+    RUNNING,
     async add(data: BorderSpinQueue): Promise<void> {
       data.type ??= "auto";
       data.completeMode ??= "leave";
