@@ -5,7 +5,7 @@
 
 ## Example config
 
-> Matched to the [hardware build guide](https://docs.digital-alchemy.app/Pi+Matrix/Hardware+Build+Guide)
+> Matched to the [hardware build guide](https://docs.digital-alchemy.app/Matrix+Rendering/Hardware+Build+Guide)
 
 ```ini
 [matrix_rendering.MATRIX_OPTIONS]
