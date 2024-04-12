@@ -5,13 +5,11 @@ import { GenericWidgetDTO } from "../..";
 import { FONT_LIST } from "../extensions";
 
 export function WidgetController({
-  lifecycle,
   fastify,
   logger,
   pi_matrix_app,
 }: TServiceParams) {
-  lifecycle.onBootstrap(() => {
-    const server = fastify.bindings.httpServer;
+  fastify.routes(server => {
     logger.info(`/widget`);
 
     logger.trace(`[GET] {%s}`, "/widget");

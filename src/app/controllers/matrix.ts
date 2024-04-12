@@ -1,13 +1,11 @@
 import { TServiceParams } from "@digital-alchemy/core";
 
 export function MatrixController({
-  lifecycle,
   fastify,
   logger,
   matrix_rendering,
 }: TServiceParams) {
-  lifecycle.onBootstrap(() => {
-    const server = fastify.bindings.httpServer;
+  fastify.routes(server => {
     logger.info(`/matrix`);
 
     logger.trace(`[GET] {%s}`, "/matrix/dimensions");

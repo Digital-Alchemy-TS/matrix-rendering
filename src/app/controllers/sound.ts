@@ -3,14 +3,8 @@ import { GENERIC_SUCCESS_RESPONSE } from "@digital-alchemy/fastify-extension";
 
 import { PlaySoundCommand } from "../..";
 
-export function SoundController({
-  lifecycle,
-  fastify,
-  pi_matrix_app,
-}: TServiceParams) {
-  lifecycle.onBootstrap(() => {
-    const server = fastify.bindings.httpServer;
-
+export function SoundController({ fastify, pi_matrix_app }: TServiceParams) {
+  fastify.routes(server => {
     // * POST /sound/play
     server.post<{ Body: PlaySoundCommand }>("/sound/play", async request => {
       await pi_matrix_app.sound.playSound(request.body);

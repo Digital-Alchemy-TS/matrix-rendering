@@ -4,14 +4,11 @@ import { GENERIC_SUCCESS_RESPONSE } from "@digital-alchemy/fastify-extension";
 import { SetPixelGrid } from "../..";
 
 export function PixelController({
-  lifecycle,
   fastify,
   pi_matrix_app,
   logger,
 }: TServiceParams) {
-  lifecycle.onBootstrap(() => {
-    const server = fastify.bindings.httpServer;
-
+  fastify.routes(server => {
     logger.info(`/pixel`);
     logger.trace(`[POST] {%s}`, "/pixel");
 

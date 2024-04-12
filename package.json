@@ -2,7 +2,7 @@
   "name": "@digital-alchemy/matrix-rendering",
   "repository": "https://github.com/Digital-Alchemy-TS/matrix-rendering",
   "homepage": "https://docs.digital-alchemy.app/Pi-Matrix",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scripts": {
     "build": "rm -rf dist/; tsc",
     "lint": "eslint src",
@@ -28,7 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "@digital-alchemy/core": "^0.3.8",
-    "@digital-alchemy/fastify-extension": "^0.3.2",
+    "@digital-alchemy/fastify-extension": "^0.3.3",
     "dayjs": "^1.11.10",
     "execa": "^8.0.1",
     "fastify": "^4.26.2",
