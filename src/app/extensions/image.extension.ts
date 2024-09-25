@@ -1,13 +1,7 @@
-import {
-  eachSeries,
-  INCREMENT,
-  sleep,
-  START,
-  TServiceParams,
-} from "@digital-alchemy/core";
+import { eachSeries, INCREMENT, sleep, START, TServiceParams } from "@digital-alchemy/core";
 import { createHash } from "crypto";
 import { existsSync, mkdirSync, readdirSync } from "fs";
-import Jimp, { intToRGBA, read } from "jimp";
+import { intToRGBA, Jimp } from "jimp";
 import { join } from "path";
 
 import { GifWidgetDTO, ImageWidgetDTO, UNLOAD_WIDGETS } from "../..";
@@ -28,10 +22,14 @@ export type ImageTransformOptions = {
 const MAX_INTENSITY = 1020;
 const IMAGE_CACHE = (widget: ImageWidgetDTO) =>
   [widget.path, widget.height, widget.width].join(`|`);
+// eslint-disable-next-line sonarjs/hashing
 const hash = (data: string) => createHash("md5").update(data).digest("hex");
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
+type jReturn = Awaited<ReturnType<typeof Jimp.read>>;
+
 function getDimensions(
-  { bitmap }: Jimp,
+  { bitmap }: jReturn,
   { height, width }: Pick<ImageTransformOptions, "height" | "width">,
 ): [width: number, height: number] {
   if (width) {
@@ -43,18 +41,12 @@ function getDimensions(
   return [bitmap.width, bitmap.height];
 }
 
-function getIntensity(file: Jimp, x: number, y: number) {
+function getIntensity(file: jReturn, x: number, y: number) {
   const { r, g, b, a } = intToRGBA(file.getPixelColor(x, y));
   return r + g + b + a;
 }
 
-export async function Image({
-  logger,
-  pi_matrix_app,
-  config,
-  lifecycle,
-  event,
-}: TServiceParams) {
+export async function Image({ logger, pi_matrix_app, config, lifecycle, event }: TServiceParams) {
   const execa = (await import("execa")).execa;
   const animationCancel = new Set<() => void>();
 
@@ -92,10 +84,7 @@ export async function Image({
 
   const image = {
     async loadAnimation(options: GifWidgetDTO): Promise<void> {
-      const cachePath = join(
-        config.matrix_rendering.ANIMATION_CACHE_DIRECTORY,
-        hash(options.path),
-      );
+      const cachePath = join(config.matrix_rendering.ANIMATION_CACHE_DIRECTORY, hash(options.path));
       if (!existsSync(cachePath)) {
         logger.info(`building frame cache for {${options.path}}`);
         mkdirSync(cachePath);
@@ -103,9 +92,7 @@ export async function Image({
         // apt-get install imagemagick
         await execa("convert", [options.path, join(cachePath, "out.png")]);
       }
-      const list = readdirSync(cachePath).filter(
-        i => i.startsWith("out") && i.endsWith("png"),
-      );
+      const list = readdirSync(cachePath).filter(i => i.startsWith("out") && i.endsWith("png"));
       await eachSeries(list, async path => {
         await image.loadImage(path, options);
       });
@@ -125,10 +112,10 @@ export async function Image({
         return false;
       }
       logger.debug(`build {${path}}`);
-      const file = await read(path);
-      const [height, width] = getDimensions(file, options);
+      const file = await Jimp.read(path);
+      const [h, w] = getDimensions(file, options);
       const grid: Cell[][] = [];
-      file.resize(height, width);
+      file.resize({ h, w });
       for (let rowIndex = 0; rowIndex < file.bitmap.height; rowIndex++) {
         const row: Cell[] = [];
         grid.push(row);
@@ -137,9 +124,7 @@ export async function Image({
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           for (let col = 0; col < 2; col++) {
             const intensity = getIntensity(file, colIndex, rowIndex);
-            const { r, g, b } = intToRGBA(
-              file.getPixelColor(colIndex, rowIndex),
-            );
+            const { r, g, b } = intToRGBA(file.getPixelColor(colIndex, rowIndex));
             const a = Math.floor((intensity / MAX_INTENSITY) * MAX_BRIGHTNESS);
             row.push([r, g, b, a]);
           }
@@ -149,10 +134,7 @@ export async function Image({
       return true;
     },
 
-    render(
-      path: string,
-      { x = START, y = START, ...options }: ImageWidgetDTO,
-    ): void {
+    render(path: string, { x = START, y = START, ...options }: ImageWidgetDTO): void {
       const key = IMAGE_CACHE(options);
       const grid = image.renderCache.get(key);
       if (!grid) {

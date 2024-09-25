@@ -2,10 +2,7 @@ import { DOWN, EMPTY, TServiceParams, UP } from "@digital-alchemy/core";
 
 import { Colors, FONTS, LineWidgetDTO, TextWidgetDTO } from "..";
 
-export type TextLineLayout = Omit<
-  TextWidgetDTO,
-  "id" | "options" | "type" | "x" | "y" | "font"
-> & {
+export type TextLineLayout = Omit<TextWidgetDTO, "id" | "options" | "type" | "x" | "y" | "font"> & {
   /**
    * Will try to determine height based on font name if not provided (6x8)
    */
@@ -51,7 +48,7 @@ export function Text({ matrix_rendering }: TServiceParams) {
       let previous = EMPTY;
       let y = EMPTY;
       return lines
-        .sort((a, b) => {
+        .toSorted((a, b) => {
           if (a.line.priority > b.line.priority) {
             return DOWN;
           }
@@ -84,13 +81,7 @@ export function Text({ matrix_rendering }: TServiceParams) {
             y: previous,
           });
           if (color) {
-            const {
-              color: lineColor,
-              x: lineX,
-              yStart,
-              yEnd,
-              brightness: lineBrightness,
-            } = color;
+            const { color: lineColor, x: lineX, yStart, yEnd, brightness: lineBrightness } = color;
             out.push({
               brightness: lineBrightness,
               color: lineColor,

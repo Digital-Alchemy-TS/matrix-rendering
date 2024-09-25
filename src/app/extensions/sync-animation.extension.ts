@@ -8,20 +8,13 @@ import {
   GenericWidgetDTO,
 } from "../..";
 
-export function SyncAnimation({
-  matrix_rendering,
-  pi_matrix_app,
-  logger,
-}: TServiceParams) {
+export function SyncAnimation({ matrix_rendering, pi_matrix_app, logger }: TServiceParams) {
   const post = new Map<string, GenericWidgetDTO[]>();
   const pre = new Map<string, GenericWidgetDTO[]>();
   return {
     post,
     pre,
-    async runAnimation({
-      order = "post",
-      ...animation
-    }: AnimationWidgetDTO): Promise<void> {
+    async runAnimation({ order = "post", ...animation }: AnimationWidgetDTO): Promise<void> {
       const id = v4();
       const callback: AnimatedBorderCallback = lines => {
         const map = order === "pre" ? pre : post;
@@ -29,11 +22,7 @@ export function SyncAnimation({
         pi_matrix_app.render.render();
       };
       if (animation.mqttStart) {
-        logger.error(
-          `[%s] cannot publish {%s}`,
-          animation.mqttStart,
-          "mqttStart",
-        );
+        logger.error(`[%s] cannot publish {%s}`, animation.mqttStart, "mqttStart");
       }
       switch (animation.animationOptions.type) {
         case "border-spin": {

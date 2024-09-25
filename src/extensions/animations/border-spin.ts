@@ -1,19 +1,7 @@
 /* eslint-disable unicorn/consistent-function-scoping */
-import {
-  ARRAY_OFFSET,
-  NONE,
-  SINGLE,
-  sleep,
-  START,
-  TServiceParams,
-} from "@digital-alchemy/core";
+import { ARRAY_OFFSET, NONE, SINGLE, sleep, START, TServiceParams } from "@digital-alchemy/core";
 
-import {
-  AnimatedBorderCallback,
-  BorderSpinOptions,
-  ColorSetter,
-  LineWidgetDTO,
-} from "../..";
+import { AnimatedBorderCallback, BorderSpinOptions, ColorSetter, LineWidgetDTO } from "../..";
 
 const DEFAULT_BORDER_INTERVAL = 10;
 const DEFAULT_BORDER_BRIGHTNESS = 50;
@@ -37,8 +25,7 @@ export function BorderSpin({ matrix_rendering }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "totalHeight" | "totalWidth">) {
-    const shift =
-      matrix_rendering.math.bottom * matrix_rendering.math.totalWidth;
+    const shift = matrix_rendering.math.bottom * matrix_rendering.math.totalWidth;
     const min = shift + padding - matrix_rendering.math.totalWidth;
     const left = shift - padding - Math.ceil(time * diff);
     const out = {
@@ -109,8 +96,7 @@ export function BorderSpin({ matrix_rendering }: TServiceParams) {
     brightness,
     color,
   }: Omit<LineOptions, "offset" | "totalWidth">) {
-    const shift =
-      matrix_rendering.math.bottom * matrix_rendering.math.totalWidth;
+    const shift = matrix_rendering.math.bottom * matrix_rendering.math.totalWidth;
     const right = shift - Math.ceil(time * diff) - padding;
     const out = {
       brightness,
@@ -170,8 +156,7 @@ export function BorderSpin({ matrix_rendering }: TServiceParams) {
       type: "line",
       // right
       x:
-        matrix_rendering.math.totalWidth *
-          (matrix_rendering.math.columns - SINGLE) -
+        matrix_rendering.math.totalWidth * (matrix_rendering.math.columns - SINGLE) -
         padding -
         ARRAY_OFFSET,
       y: START + padding,
@@ -196,8 +181,7 @@ export function BorderSpin({ matrix_rendering }: TServiceParams) {
         (matrix_rendering.math.panelTotal / matrix_rendering.math.columns) -
       bothSidesPadding;
     const totalWidth =
-      matrix_rendering.math.panelWidth * matrix_rendering.math.columns -
-      bothSidesPadding;
+      matrix_rendering.math.panelWidth * matrix_rendering.math.columns - bothSidesPadding;
     const diff = totalWidth / totalHeight;
     // ! Extend
     for (let time = START; time <= totalHeight; time++) {

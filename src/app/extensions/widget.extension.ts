@@ -1,11 +1,7 @@
 import { eachSeries, EMPTY, NONE, TServiceParams } from "@digital-alchemy/core";
 import dayjs from "dayjs";
 import { hrtime } from "process";
-import {
-  HorizontalAlignment,
-  LayoutUtils,
-  VerticalAlignment,
-} from "rpi-led-matrix";
+import { HorizontalAlignment, LayoutUtils, VerticalAlignment } from "rpi-led-matrix";
 
 import {
   CircleWidgetDTO,
@@ -36,10 +32,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     x = EMPTY,
     y = EMPTY,
   }: CircleWidgetDTO): void {
-    pi_matrix_app.instance.instance
-      .fgColor(color)
-      .brightness(brightness)
-      .drawCircle(x, y, r);
+    pi_matrix_app.instance.instance.fgColor(color).brightness(brightness).drawCircle(x, y, r);
   }
   const KNOWN_WIDGET_TYPES = new Set<string>();
 
@@ -51,8 +44,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   }: CountdownWidgetDTO & { end?: number }): void {
     widget.end ??= dayjs(widget.target).valueOf();
     const now = Date.now();
-    const diff =
-      !overflow && widget.end < now ? EMPTY : Math.abs(widget.end - now);
+    const diff = !overflow && widget.end < now ? EMPTY : Math.abs(widget.end - now);
     renderText({
       ...(widget as CountdownWidgetDTO),
       text: `${prefix}${HMS(diff)}${suffix}`,
@@ -101,17 +93,10 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   }: Partial<TextWidgetDTO>): void {
     const font = pi_matrix_app.text.font(widget.font);
     if (!font) {
-      logger.error(
-        `failed to load font to render, asked for {%s}`,
-        widget.font,
-      );
+      logger.error(`failed to load font to render, asked for {%s}`, widget.font);
       return;
     }
-    const lines = LayoutUtils.textToLines(
-      font,
-      pi_matrix_app.instance.instance.width(),
-      text,
-    );
+    const lines = LayoutUtils.textToLines(font, pi_matrix_app.instance.instance.width(), text);
     const glyphs = LayoutUtils.linesToMappedGlyphs(
       lines,
       font.height(),
@@ -120,10 +105,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
       horizontal,
       vertical,
     );
-    pi_matrix_app.instance.instance
-      .font(font)
-      .fgColor(color)
-      .brightness(brightness);
+    pi_matrix_app.instance.instance.font(font).fgColor(color).brightness(brightness);
     glyphs.forEach(({ x, y, char }) =>
       pi_matrix_app.instance.instance.drawText(
         char,
@@ -186,21 +168,12 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
         pi_matrix_app.instance.instance.clear();
         WIDGET_RENDER_PHASE.labels({ phase: "clear" }).observe(msOffset(start));
         const assemble = hrtime();
-        await eachSeries(
-          list,
-          async widget => await pi_matrix_app.widget.renderWidget(widget),
-        );
-        WIDGET_RENDER_PHASE.labels({ phase: "write" }).observe(
-          msOffset(assemble),
-        );
+        await eachSeries(list, async widget => await pi_matrix_app.widget.renderWidget(widget));
+        WIDGET_RENDER_PHASE.labels({ phase: "write" }).observe(msOffset(assemble));
         const syncStart = hrtime();
         pi_matrix_app.instance.instance.sync();
-        WIDGET_RENDER_PHASE.labels({ phase: "sync" }).observe(
-          msOffset(syncStart),
-        );
-        RENDER_DURATION_HISTOGRAM.labels({ type: "widget" }).observe(
-          msOffset(start),
-        );
+        WIDGET_RENDER_PHASE.labels({ phase: "sync" }).observe(msOffset(syncStart));
+        RENDER_DURATION_HISTOGRAM.labels({ type: "widget" }).observe(msOffset(start));
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
@@ -221,9 +194,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
         case "clock": {
           renderText({
             ...(widget as ClockWidgetDTO),
-            text: dayjs().format(
-              (widget as ClockWidgetDTO).format ?? "hh:mm:ss",
-            ),
+            text: dayjs().format((widget as ClockWidgetDTO).format ?? "hh:mm:ss"),
           });
           return;
         }

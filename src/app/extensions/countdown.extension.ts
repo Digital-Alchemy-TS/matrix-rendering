@@ -1,13 +1,7 @@
 import { sleep, TServiceParams } from "@digital-alchemy/core";
 import dayjs from "dayjs";
 
-import {
-  AnimatedBorderCallback,
-  CountdownOptions,
-  HMS,
-  HMSS,
-  TextWidgetDTO,
-} from "../..";
+import { AnimatedBorderCallback, CountdownOptions, HMS, HMSS, TextWidgetDTO } from "../..";
 
 export function Countdown({ pi_matrix_app }: TServiceParams) {
   return {

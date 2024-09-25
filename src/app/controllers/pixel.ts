@@ -3,11 +3,7 @@ import { GENERIC_SUCCESS_RESPONSE } from "@digital-alchemy/fastify-extension";
 
 import { SetPixelGrid } from "../..";
 
-export function PixelController({
-  fastify,
-  pi_matrix_app,
-  logger,
-}: TServiceParams) {
+export function PixelController({ fastify, pi_matrix_app, logger }: TServiceParams) {
   fastify.routes(server => {
     logger.info(`/pixel`);
     logger.trace(`[POST] {%s}`, "/pixel");

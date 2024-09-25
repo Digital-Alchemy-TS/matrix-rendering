@@ -14,9 +14,7 @@ export function HMSS(ms: number) {
   const hour = Math.floor(ms / HOUR);
   const minute = Math.floor((ms - hour * HOUR) / MINUTE);
   const second = Math.floor((ms - hour * HOUR - minute * MINUTE) / SECOND);
-  const milli = Math.floor(
-    (ms - hour * HOUR - minute * MINUTE - second * SECOND) / SECOND,
-  );
+  const milli = Math.floor((ms - hour * HOUR - minute * MINUTE - second * SECOND) / SECOND);
   return format({ hour, milli, minute, second });
 }
 

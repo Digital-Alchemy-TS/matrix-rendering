@@ -1,16 +1,12 @@
 import { HorizontalAlignment, VerticalAlignment } from "rpi-led-matrix";
 
-import {
-  BorderSpinOptions,
-  CountdownOptions,
-  PulseLaserOptions,
-} from "./animations";
+import { BorderSpinOptions, CountdownOptions, PulseLaserOptions } from "./animations";
 import { Colors, RGB } from "./colors";
 import { FONTS } from "./fonts";
 
-export type AnimatedBorderCallback<
-  T extends GenericWidgetDTO = GenericWidgetDTO,
-> = (lines: T[]) => void;
+export type AnimatedBorderCallback<T extends GenericWidgetDTO = GenericWidgetDTO> = (
+  lines: T[],
+) => void;
 
 export type WidgetType =
   | "explode"

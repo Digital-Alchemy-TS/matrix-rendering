@@ -52,13 +52,7 @@ interface Step2 {
 type ExecOptions = PulseLaserOptions & { callback: AnimatedBorderCallback };
 
 export function PulseLaser({ matrix_rendering }: TServiceParams) {
-  async function step1({
-    callback,
-    color,
-    x,
-    size,
-    yStart,
-  }: Step1): Promise<void> {
+  async function step1({ callback, color, x, size, yStart }: Step1): Promise<void> {
     const line: LineWidgetDTO = {
       color,
       endX: x,
@@ -67,6 +61,7 @@ export function PulseLaser({ matrix_rendering }: TServiceParams) {
       x,
       y: yStart,
     };
+    // eslint-disable-next-line sonarjs/no-dead-store
     let steps = EMPTY;
     if (is.even(size)) {
       line.y = yStart + HALF * size;
@@ -114,11 +109,7 @@ export function PulseLaser({ matrix_rendering }: TServiceParams) {
       y: yTop,
     };
     callback([top, bottom]);
-    for (
-      let i = START;
-      i < matrix_rendering.math.totalWidth - ARRAY_OFFSET;
-      i++
-    ) {
+    for (let i = START; i < matrix_rendering.math.totalWidth - ARRAY_OFFSET; i++) {
       await wait();
       bottom.endX++;
       top.endX++;
@@ -126,14 +117,7 @@ export function PulseLaser({ matrix_rendering }: TServiceParams) {
     }
   }
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
-  async function step3({
-    callback,
-    y,
-    beam,
-    row,
-    brightness,
-  }: ExecOptions): Promise<void> {
+  async function step3({ callback, y, beam, row, brightness }: ExecOptions): Promise<void> {
     const x = row * matrix_rendering.math.totalWidth;
     const endX = x + matrix_rendering.math.totalWidth - ARRAY_OFFSET;
     const background = beam.map((_, index) => {
@@ -151,14 +135,14 @@ export function PulseLaser({ matrix_rendering }: TServiceParams) {
     background[START].endX = endX;
     background[START].color = beam[START];
     background[beam.length - ARRAY_OFFSET].endX = endX;
-    background[beam.length - ARRAY_OFFSET].color =
-      beam[beam.length - ARRAY_OFFSET];
+    background[beam.length - ARRAY_OFFSET].color = beam[beam.length - ARRAY_OFFSET];
     let delay = INITIAL_FILLIN;
     await eachSeries(
       background
         .slice(SINGLE, INVERT_VALUE * SINGLE)
         .map((line, index) => [line, index] as [LineWidgetDTO, number])
-        .sort(() => (Math.random() > HALF ? UP : DOWN)),
+        // eslint-disable-next-line sonarjs/pseudo-random
+        .toSorted(() => (Math.random() > HALF ? UP : DOWN)),
       async ([line, index]: [LineWidgetDTO, number]) => {
         delay = Math.max(delay - FILLIN_PACE, MIN_FILLIN);
         line.color = beam[index];
@@ -183,13 +167,9 @@ export function PulseLaser({ matrix_rendering }: TServiceParams) {
         endX: i.x,
       };
     });
-    const merged = [...background, ...foreground] as Array<
-      LineWidgetDTO | RectangleWidgetDTO
-    >;
+    const merged = [...background, ...foreground] as Array<LineWidgetDTO | RectangleWidgetDTO>;
     callback(merged);
-    const movingStart = Math.floor(
-      matrix_rendering.math.totalWidth * TWO_THIRDS,
-    );
+    const movingStart = Math.floor(matrix_rendering.math.totalWidth * TWO_THIRDS);
     const max = x + matrix_rendering.math.totalWidth;
     let added = false;
     const mask = {
@@ -203,11 +183,7 @@ export function PulseLaser({ matrix_rendering }: TServiceParams) {
     } as RectangleWidgetDTO;
     delay = HALF * WAIT_INTERVAL;
 
-    for (
-      let i = START;
-      i < matrix_rendering.math.totalWidth + movingStart;
-      i++
-    ) {
+    for (let i = START; i < matrix_rendering.math.totalWidth + movingStart; i++) {
       await sleep(delay);
       foreground.forEach(line => {
         if (line.endX < max - ARRAY_OFFSET) {

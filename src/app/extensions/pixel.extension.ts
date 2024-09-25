@@ -28,15 +28,11 @@ export function Pixel({ pi_matrix_app, matrix_rendering }: TServiceParams) {
         pi_matrix_app.instance.instance.clear();
       }
       grid.forEach((row, ROW) =>
-        row.forEach((color, COL) =>
-          pixel(COL, ROW).fgColor(palette[color] ?? OFF),
-        ),
+        row.forEach((color, COL) => pixel(COL, ROW).fgColor(palette[color] ?? OFF)),
       );
       pi_matrix_app.instance.instance.sync();
       const durationInMilliseconds = msOffset(start);
-      RENDER_DURATION_HISTOGRAM.labels({ type: "pixel" }).observe(
-        durationInMilliseconds,
-      );
+      RENDER_DURATION_HISTOGRAM.labels({ type: "pixel" }).observe(durationInMilliseconds);
     },
   };
 }

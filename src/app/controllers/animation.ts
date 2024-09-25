@@ -1,18 +1,9 @@
 import { TServiceParams } from "@digital-alchemy/core";
 import { GENERIC_SUCCESS_RESPONSE } from "@digital-alchemy/fastify-extension";
 
-import {
-  AnimationWidgetDTO,
-  BorderSpinQueue,
-  Colors,
-  PulseLaserOptions,
-} from "../..";
+import { AnimationWidgetDTO, BorderSpinQueue, Colors, PulseLaserOptions } from "../..";
 
-export function AnimationController({
-  fastify,
-  logger,
-  pi_matrix_app,
-}: TServiceParams) {
+export function AnimationController({ fastify, logger, pi_matrix_app }: TServiceParams) {
   fastify.routes(server => {
     logger.info(`/animation`);
 
@@ -25,24 +16,18 @@ export function AnimationController({
     });
 
     logger.trace(`[POST] {%s}`, "/animation/pulse-laser");
-    server.post<{ Body: PulseLaserOptions }>(
-      "/animation/pulse-laser",
-      request => {
-        return pi_matrix_app.sync.runAnimation({
-          animationOptions: request.body,
-          type: "animation",
-        });
-      },
-    );
+    server.post<{ Body: PulseLaserOptions }>("/animation/pulse-laser", request => {
+      return pi_matrix_app.sync.runAnimation({
+        animationOptions: request.body,
+        type: "animation",
+      });
+    });
 
     logger.trace(`[POST] {%s}`, "/animation/spin-queue");
-    server.post<{ Body: BorderSpinQueue }>(
-      "/animation/spin-queue",
-      async request => {
-        await pi_matrix_app.sync.spinQueue(request.body);
-        return GENERIC_SUCCESS_RESPONSE;
-      },
-    );
+    server.post<{ Body: BorderSpinQueue }>("/animation/spin-queue", async request => {
+      await pi_matrix_app.sync.spinQueue(request.body);
+      return GENERIC_SUCCESS_RESPONSE;
+    });
 
     logger.trace(`[GET] {%s}`, "/animation/test");
     server.get("/animation/test", async () => {

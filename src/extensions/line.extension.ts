@@ -14,11 +14,7 @@ export function Line({ matrix_rendering }: TServiceParams) {
   /**
    * Stitch together a vertical line going across multiple panels in a grid
    */
-  function multiPanelVerticalLine(
-    x: number,
-    yTop: number,
-    yBottom: number,
-  ): LinePartial[] {
+  function multiPanelVerticalLine(x: number, yTop: number, yBottom: number): LinePartial[] {
     if (yTop > yBottom) {
       return multiPanelVerticalLine(x, yBottom, yTop);
     }

@@ -1,8 +1,4 @@
-import {
-  CreateLibrary,
-  InternalConfig,
-  StringConfig,
-} from "@digital-alchemy/core";
+import { CreateLibrary, InternalConfig, StringConfig } from "@digital-alchemy/core";
 import { homedir } from "os";
 import { join } from "path";
 import { cwd } from "process";
@@ -34,8 +30,7 @@ export const LIB_MATRIX_RENDERING = CreateLibrary({
     },
     DEFAULT_FONT: {
       default: "5x8",
-      description:
-        "What font should text rendering use if the widget does not provide one?",
+      description: "What font should text rendering use if the widget does not provide one?",
       type: "string",
     } as StringConfig<FONTS>,
     DEFAULT_SOUND_DEVICE: {
@@ -45,8 +40,7 @@ export const LIB_MATRIX_RENDERING = CreateLibrary({
     },
     FONTS_DIRECTORY: {
       default: join(cwd(), "assets", "fonts"),
-      description:
-        "Directory to load .bdf fonts from. A collection comes with the app",
+      description: "Directory to load .bdf fonts from. A collection comes with the app",
       type: "string",
     },
     MATRIX_OPTIONS: {

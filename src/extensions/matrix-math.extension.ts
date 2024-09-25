@@ -2,12 +2,7 @@ import { ARRAY_OFFSET, NONE, TServiceParams } from "@digital-alchemy/core";
 
 import { MAX_COLOR_BRIGHTNESS, OFF } from "..";
 
-export function MatrixMath({
-  logger,
-  config,
-  matrix_rendering,
-  lifecycle,
-}: TServiceParams) {
+export function MatrixMath({ logger, config, matrix_rendering, lifecycle }: TServiceParams) {
   lifecycle.onPostConfig(() => {
     logger.debug("updating math from config");
 
@@ -18,16 +13,14 @@ export function MatrixMath({
     matrix_rendering.math.panelTotal = config.matrix_rendering.PANEL_TOTAL;
     // MATH(S)!
     matrix_rendering.math.bottomLeft =
-      (matrix_rendering.math.columns - ARRAY_OFFSET) *
-      matrix_rendering.math.panelHeight;
+      (matrix_rendering.math.columns - ARRAY_OFFSET) * matrix_rendering.math.panelHeight;
     matrix_rendering.math.totalWidth =
       matrix_rendering.math.panelWidth * matrix_rendering.math.columns;
     matrix_rendering.math.verticalPanelCount = Math.ceil(
       matrix_rendering.math.panelTotal / matrix_rendering.math.columns,
     );
     matrix_rendering.math.totalHeight =
-      matrix_rendering.math.verticalPanelCount *
-      matrix_rendering.math.panelHeight;
+      matrix_rendering.math.verticalPanelCount * matrix_rendering.math.panelHeight;
     matrix_rendering.math.bottom =
       matrix_rendering.math.totalHeight * matrix_rendering.math.panelHeight;
   });
@@ -37,18 +30,12 @@ export function MatrixMath({
     bottomLeft: NONE,
     columns: NONE,
     containBrightness(brightness: number) {
-      return Math.max(
-        Math.min(brightness ?? MAX_COLOR_BRIGHTNESS, MAX_COLOR_BRIGHTNESS),
-        OFF,
-      );
+      return Math.max(Math.min(brightness ?? MAX_COLOR_BRIGHTNESS, MAX_COLOR_BRIGHTNESS), OFF);
     },
     panelHeight: NONE,
     panelTotal: NONE,
     panelWidth: NONE,
-    rolloverFix(
-      x: number,
-      y: number,
-    ): [x: number, y: number, panelShift: number] {
+    rolloverFix(x: number, y: number): [x: number, y: number, panelShift: number] {
       const panelShift = Math.floor(y / matrix_rendering.math.panelHeight);
       return [
         // ? push horizontally

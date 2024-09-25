@@ -1,10 +1,6 @@
 import { TServiceParams } from "@digital-alchemy/core";
 
-export function MatrixController({
-  fastify,
-  logger,
-  matrix_rendering,
-}: TServiceParams) {
+export function MatrixController({ fastify, logger, matrix_rendering }: TServiceParams) {
   fastify.routes(server => {
     logger.info(`/matrix`);
 

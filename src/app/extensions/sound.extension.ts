@@ -2,12 +2,7 @@ import { TServiceParams } from "@digital-alchemy/core";
 import { readdirSync } from "fs";
 import { isAbsolute, join } from "path";
 
-import {
-  APlaySpeakerDevice,
-  NO_SOUND_DEVICE,
-  PlaySoundCommand,
-  SoundConfiguration,
-} from "../..";
+import { APlaySpeakerDevice, NO_SOUND_DEVICE, PlaySoundCommand, SoundConfiguration } from "../..";
 
 export async function Sound({ config, logger }: TServiceParams) {
   const { execa } = await import("execa");
@@ -22,9 +17,7 @@ export async function Sound({ config, logger }: TServiceParams) {
       sound,
       card = config.matrix_rendering.DEFAULT_SOUND_DEVICE,
     }: PlaySoundCommand): Promise<void> {
-      sound = isAbsolute(sound)
-        ? sound
-        : join(config.matrix_rendering.SOUND_DIRECTORY, sound);
+      sound = isAbsolute(sound) ? sound : join(config.matrix_rendering.SOUND_DIRECTORY, sound);
       if (card !== NO_SOUND_DEVICE) {
         logger.info(`[%s] playing on card {%s}`, sound, card);
         await execa("mplayer", ["-ao", `alsa:device=hw=${card}.0`, sound]);

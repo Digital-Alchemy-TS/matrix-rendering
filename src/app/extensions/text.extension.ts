@@ -45,10 +45,7 @@ export function Text({
       if (fonts.has(name)) {
         return;
       }
-      const file = join(
-        config.matrix_rendering.FONTS_DIRECTORY,
-        `${name}.${EXT}`,
-      );
+      const file = join(config.matrix_rendering.FONTS_DIRECTORY, `${name}.${EXT}`);
       if (!existsSync(file)) {
         logger.error({ file }, `[%s] cannot find font`, name);
         return;
@@ -62,15 +59,9 @@ export function Text({
     },
 
     render(widget: Partial<TextWidgetDTO>): void {
-      const font = fonts.get(
-        widget.font ?? config.matrix_rendering.DEFAULT_FONT,
-      );
+      const font = fonts.get(widget.font ?? config.matrix_rendering.DEFAULT_FONT);
       const glyphs = LayoutUtils.linesToMappedGlyphs(
-        LayoutUtils.textToLines(
-          font,
-          pi_matrix_app.instance.instance.width(),
-          widget.text,
-        ),
+        LayoutUtils.textToLines(font, pi_matrix_app.instance.instance.width(), widget.text),
         font.height(),
         pi_matrix_app.instance.instance.width(),
         pi_matrix_app.instance.instance.height(),

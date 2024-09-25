@@ -3,10 +3,7 @@ import { TServiceParams } from "@digital-alchemy/core";
 import { MATRIX_RENDER_IMMEDIATE } from "../helpers/metrics";
 
 export const AFTER_SYNC = "after-sync";
-export type tAfterSync = (arguments_: {
-  dt: number;
-  t: number;
-}) => boolean | Promise<boolean>;
+export type tAfterSync = (arguments_: { dt: number; t: number }) => boolean | Promise<boolean>;
 
 export function RenderExtension({
   logger,
@@ -18,10 +15,7 @@ export function RenderExtension({
   let isRendering: boolean;
   let renderImmediate: boolean;
   lifecycle.onPostConfig(() => {
-    logger.info(
-      { interval: config.matrix_rendering.UPDATE_INTERVAL },
-      `starting render loop`,
-    );
+    logger.info({ interval: config.matrix_rendering.UPDATE_INTERVAL }, `starting render loop`);
     scheduler.interval({
       exec: async () => await render.render(),
       interval: config.matrix_rendering.UPDATE_INTERVAL,

@@ -56,39 +56,21 @@ export function isBright(color: string): boolean {
 export function kelvinToRGB(kelvin: number): RGB {
   kelvin = clamp(kelvin, 1000, 40_000) / 100;
   const r =
-    kelvin <= 66
-      ? 255
-      : clamp(
-          329.698_727_446 * Math.pow(kelvin - 60, -0.133_204_759_2),
-          0,
-          255,
-        );
+    kelvin <= 66 ? 255 : clamp(329.698_727_446 * Math.pow(kelvin - 60, -0.133_204_759_2), 0, 255);
   const g =
     kelvin <= 66
       ? clamp(99.470_802_586_1 * Math.log(kelvin) - 161.119_568_166_1, 0, 255)
-      : clamp(
-          288.122_169_528_3 * Math.pow(kelvin - 60, -0.075_514_849_2),
-          0,
-          255,
-        );
+      : clamp(288.122_169_528_3 * Math.pow(kelvin - 60, -0.075_514_849_2), 0, 255);
   const b =
     kelvin >= 66
       ? 255
       : kelvin <= 19
         ? 0
-        : clamp(
-            138.517_731_223_1 * Math.log(kelvin - 10) - 305.044_792_730_7,
-            0,
-            255,
-          );
+        : clamp(138.517_731_223_1 * Math.log(kelvin - 10) - 305.044_792_730_7, 0, 255);
   return { b, g, r };
 }
 
-export function rgbToHEX({
-  r = OFF,
-  b = OFF,
-  g = OFF,
-}: Partial<RGB> = {}): string {
+export function rgbToHEX({ r = OFF, b = OFF, g = OFF }: Partial<RGB> = {}): string {
   return (
     r.toString(16).padStart(HEX_SIZE, "0") +
     b.toString(16).padStart(HEX_SIZE, "0") +

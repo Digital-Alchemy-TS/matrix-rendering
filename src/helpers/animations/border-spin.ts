@@ -13,8 +13,7 @@ export interface BorderSpinTickOptions {
   stop: () => void;
 }
 
-export type BorderSpinCallbackOptions = BorderSpinOptions &
-  BorderSpinTickOptions;
+export type BorderSpinCallbackOptions = BorderSpinOptions & BorderSpinTickOptions;
 
 export class BorderSpinQueueItem {
   /**
