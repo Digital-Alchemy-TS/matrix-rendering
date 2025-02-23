@@ -75,6 +75,7 @@ export default [
       "unicorn/no-await-expression-member": "off",
       "sonarjs/no-invalid-await": "off",
       "sonarjs/no-nested-functions": "off",
+      "sonarjs/publicly-writable-directories": "off",
       "sonarjs/no-infinite-loop": "off",
       "unicorn/no-useless-undefined": "off",
       "sonarjs/fixme-tag": "off",
