@@ -18,7 +18,7 @@ export function RenderExtension({
     logger.info({ interval: config.matrix_rendering.UPDATE_INTERVAL }, `starting render loop`);
     scheduler.setInterval(
       async () => await render.render(),
-       config.matrix_rendering.UPDATE_INTERVAL,
+      config.matrix_rendering.UPDATE_INTERVAL,
     );
     // ! This method cannot be async
     // ! matrix library will go 100% CPU and break everything

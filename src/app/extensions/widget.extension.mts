@@ -1,6 +1,5 @@
 import { eachSeries, EMPTY, NONE, TServiceParams } from "@digital-alchemy/core";
 import dayjs from "dayjs";
-import { hrtime } from "process";
 import { HorizontalAlignment, LayoutUtils, VerticalAlignment } from "rpi-led-matrix";
 
 import {
@@ -17,12 +16,6 @@ import {
   TextWidgetDTO,
   UNLOAD_WIDGETS,
 } from "../../index.mts";
-import {
-  MATRIX_RENDER_WIDGET_COUNT,
-  msOffset,
-  RENDER_DURATION_HISTOGRAM,
-  WIDGET_RENDER_PHASE,
-} from "../helpers/index.mts";
 
 export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   function renderCircle({
@@ -34,7 +27,6 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
   }: CircleWidgetDTO): void {
     pi_matrix_app.instance.instance.fgColor(color).brightness(brightness).drawCircle(x, y, r);
   }
-  const KNOWN_WIDGET_TYPES = new Set<string>();
 
   function renderCountdown({
     overflow = false,
@@ -164,16 +156,9 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     async render(): Promise<void> {
       const list = [prerender(), widget.widgets, postrender()].flat();
       try {
-        const start = hrtime();
         pi_matrix_app.instance.instance.clear();
-        WIDGET_RENDER_PHASE.labels({ phase: "clear" }).observe(msOffset(start));
-        const assemble = hrtime();
         await eachSeries(list, async widget => await pi_matrix_app.widget.renderWidget(widget));
-        WIDGET_RENDER_PHASE.labels({ phase: "write" }).observe(msOffset(assemble));
-        const syncStart = hrtime();
         pi_matrix_app.instance.instance.sync();
-        WIDGET_RENDER_PHASE.labels({ phase: "sync" }).observe(msOffset(syncStart));
-        RENDER_DURATION_HISTOGRAM.labels({ type: "widget" }).observe(msOffset(start));
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
@@ -223,13 +208,9 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
       widget.widgets = incoming;
       const counts = {} as Record<string, number>;
       incoming.forEach(i => {
-        KNOWN_WIDGET_TYPES.add(i.type);
         counts[i.type] ??= NONE;
         counts[i.type]++;
       });
-      KNOWN_WIDGET_TYPES.forEach(type =>
-        MATRIX_RENDER_WIDGET_COUNT.labels({ type }).set(counts[type] ?? NONE),
-      );
       widget.initWidgets(incoming);
     },
 

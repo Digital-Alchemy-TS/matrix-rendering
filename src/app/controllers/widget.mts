@@ -4,7 +4,7 @@ import { GENERIC_SUCCESS_RESPONSE } from "@digital-alchemy/fastify-extension";
 import { GenericWidgetDTO } from "../../index.mts";
 import { FONT_LIST } from "../extensions/index.mts";
 
-export function WidgetController({ fastify, logger, pi_matrix_app }: TServiceParams) {
+export function WidgetController({ fastify, logger, pi_matrix_app, scheduler }: TServiceParams) {
   fastify.routes(server => {
     logger.info(`/widget`);
 

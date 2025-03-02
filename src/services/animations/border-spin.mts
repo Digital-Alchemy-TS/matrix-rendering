@@ -1,7 +1,12 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import { ARRAY_OFFSET, NONE, SINGLE, sleep, START, TServiceParams } from "@digital-alchemy/core";
 
-import { AnimatedBorderCallback, BorderSpinOptions, ColorSetter, LineWidgetDTO } from "../../index.mts";
+import {
+  AnimatedBorderCallback,
+  BorderSpinOptions,
+  ColorSetter,
+  LineWidgetDTO,
+} from "../../index.mts";
 
 const DEFAULT_BORDER_INTERVAL = 10;
 const DEFAULT_BORDER_BRIGHTNESS = 50;
@@ -36,7 +41,7 @@ export function BorderSpin({ matrix_rendering }: TServiceParams) {
       endY: matrix_rendering.math.panelHeight - SINGLE - padding,
       type: "line",
       // left
-      x: left < min ? min : left,
+      x: Math.max(left, min),
       y: matrix_rendering.math.panelHeight - SINGLE - padding,
     } as LineWidgetDTO;
     return out;

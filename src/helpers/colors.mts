@@ -8,7 +8,7 @@ const clamp = (input: number, min: number, max: number) => {
   if (input < min) {
     return min;
   }
-  return input > max ? max : input;
+  return Math.min(input, max);
 };
 export const OFF = 0;
 export const MAX_COLOR_BRIGHTNESS = 255;
@@ -64,7 +64,8 @@ export function kelvinToRGB(kelvin: number): RGB {
   const b =
     kelvin >= 66
       ? 255
-      : kelvin <= 19
+      : // eslint-disable-next-line sonarjs/no-nested-conditional
+        kelvin <= 19
         ? 0
         : clamp(138.517_731_223_1 * Math.log(kelvin - 10) - 305.044_792_730_7, 0, 255);
   return { b, g, r };
@@ -82,6 +83,7 @@ export function rgbToHEX({ r = OFF, b = OFF, g = OFF }: Partial<RGB> = {}): stri
  * Reference code: https://gist.github.com/mjackson/5311256#file-color-conversion-algorithms-js-L84
  */
 export function rgbToHSV({ r, g, b }: RGB): HSV {
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   (r /= 255), (g /= 255), (b /= 255);
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);

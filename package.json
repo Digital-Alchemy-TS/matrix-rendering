@@ -28,7 +28,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@digital-alchemy/core": "^25.2.1",
+    "@digital-alchemy/core": "^25.2.2",
+    "@digital-alchemy/fastify-extension": "^25.3.1",
     "dayjs": "^1.11.13",
     "execa": "^9.5.2",
     "fastify": "^5.2.1",
@@ -41,7 +42,6 @@
   },
   "devDependencies": {
     "@cspell/eslint-plugin": "^8.17.5",
-    "@digital-alchemy/fastify-extension": "^24.9.1",
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.3.0",
     "@eslint/js": "^9.21.0",
@@ -50,13 +50,13 @@
     "@types/js-yaml": "^4.0.9",
     "@types/minimist": "^1.2.5",
     "@types/mute-stream": "^0.0.4",
-    "@types/node": "^22.13.5",
+    "@types/node": "^22.13.8",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.5.14",
-    "@typescript-eslint/eslint-plugin": "8.24.1",
-    "@typescript-eslint/parser": "8.24.1",
+    "@typescript-eslint/eslint-plugin": "8.25.0",
+    "@typescript-eslint/parser": "8.25.0",
     "eslint": "9.21.0",
-    "eslint-config-prettier": "10.0.1",
+    "eslint-config-prettier": "10.0.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsonc": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^4.1.2",
@@ -65,15 +65,15 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-sonarjs": "^3.0.2",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
-    "eslint-plugin-unicorn": "^57.0.0",
+    "eslint-plugin-unicorn": "^56.0.1",
     "globals": "^16.0.0",
     "jest": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "prettier": "^3.5.2",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.2.6",
     "tsx": "^4.19.3",
-    "type-fest": "^4.35.0",
-    "typescript": "^5.7.3"
+    "type-fest": "^4.36.0",
+    "typescript": "^5.8.2"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.7.0"
 }

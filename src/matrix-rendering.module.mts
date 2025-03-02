@@ -4,8 +4,8 @@ import { join } from "path";
 import { cwd } from "process";
 import { MatrixOptions, RuntimeOptions } from "rpi-led-matrix";
 
-import { NO_SOUND_DEVICE } from "./index.mts";
 import { FONTS } from "./helpers/fonts.mts";
+import { NO_SOUND_DEVICE } from "./index.mts";
 import { BorderSpin, Line, MatrixMath, PulseLaser, Text } from "./services/index.mts";
 
 export const LIB_MATRIX_RENDERING = CreateLibrary({

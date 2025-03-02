@@ -2,7 +2,12 @@ import { TServiceParams } from "@digital-alchemy/core";
 import { readdirSync } from "fs";
 import { isAbsolute, join } from "path";
 
-import { APlaySpeakerDevice, NO_SOUND_DEVICE, PlaySoundCommand, SoundConfiguration } from "../../index.mts";
+import {
+  APlaySpeakerDevice,
+  NO_SOUND_DEVICE,
+  PlaySoundCommand,
+  SoundConfiguration,
+} from "../../index.mts";
 
 export async function Sound({ config, logger }: TServiceParams) {
   const { execa } = await import("execa");
