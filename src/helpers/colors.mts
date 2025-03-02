@@ -58,7 +58,7 @@ export const ColorNames = [
 
 export const ColorSetter = Type.Union(
   [RGB, Type.Number(), ...ColorNames.map(i => Type.Literal(i))],
-  { default: "white" },
+  { default: "White" },
 );
 export type ColorSetter = typeof ColorSetter.static;
 
