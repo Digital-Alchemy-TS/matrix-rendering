@@ -1,4 +1,4 @@
-import { ColorSetter } from "../render-widget.dto.mts";
+import { ColorSetter } from "../colors.mts";
 
 export class BorderPulseOptions {
   public color: ColorSetter;

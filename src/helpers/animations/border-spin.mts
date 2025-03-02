@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { ColorSetter } from "../render-widget.dto.mts";
+import { ColorSetter } from "../colors.mts";
 
 export const BorderSpinOptions = Type.Object({
   brightness: Type.Optional(Type.Number()),

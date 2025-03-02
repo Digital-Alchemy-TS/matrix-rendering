@@ -56,6 +56,12 @@ export const ColorNames = [
   "Yellow",
 ] as const;
 
+export const ColorSetter = Type.Union(
+  [RGB, Type.Number(), ...ColorNames.map(i => Type.Literal(i))],
+  { default: "white" },
+);
+export type ColorSetter = typeof ColorSetter.static;
+
 export function hexToRGB(hex = "000000"): RGB {
   const split = hex.match(new RegExp("[0-9A-Fa-f]{1,2}", "g"));
   return {

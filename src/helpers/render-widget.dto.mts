@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
 import { BorderSpinOptions, CountdownOptions, PulseLaserOptions } from "./animations/index.mts";
-import { ColorNames, RGB } from "./colors.mts";
+import { ColorSetter } from "./colors.mts";
 import { FONT_LIST } from "./fonts.mts";
 
 export type AnimatedBorderCallback<T extends GenericWidgetDTO = GenericWidgetDTO> = (
@@ -31,17 +31,6 @@ export type WidgetType =
   | "circle"
   | "rectangle"
   | "line";
-
-export const ColorSetter = Type.Union(
-  [
-    //
-    RGB,
-    Type.Number(),
-    ...ColorNames.map(i => Type.Literal(i)),
-  ],
-  { default: "white" },
-);
-export type ColorSetter = typeof ColorSetter.static;
 
 export const GenericWidgetDTO = Type.Object({
   id: Type.Optional(Type.String()),
