@@ -1,6 +1,5 @@
 export * from "./border-spin-queue.extension.mts";
 export * from "./countdown.extension.mts";
-export * from "./fastify.extension.mts";
 export * from "./image.extension.mts";
 export * from "./matrix-instance.extension.mts";
 export * from "./pixel.extension.mts";

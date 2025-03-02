@@ -1,9 +1,21 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
 import { HALF } from "@digital-alchemy/core";
+import { Type } from "@sinclair/typebox";
 
-export type RGB = Record<"r" | "g" | "b", number>;
-type HSV = Record<"h" | "s" | "v", number>;
+export const RGB = Type.Object({
+  b: Type.Number(),
+  g: Type.Number(),
+  r: Type.Number(),
+});
+export type RGB = typeof RGB.static;
+export const HSV = Type.Object({
+  h: Type.Number(),
+  s: Type.Number(),
+  v: Type.Number(),
+});
+export type HSV = typeof HSV.static;
+
 const clamp = (input: number, min: number, max: number) => {
   if (input < min) {
     return min;
@@ -30,6 +42,19 @@ export enum Colors {
   White = 0xff_ff_ff,
   Yellow = 0xff_ff_00,
 }
+export const ColorNames = [
+  "Aquamarine",
+  "Black",
+  "Blue",
+  "Cyan",
+  "Green",
+  "Magenta",
+  "Purple",
+  "Orange",
+  "Red",
+  "White",
+  "Yellow",
+] as const;
 
 export function hexToRGB(hex = "000000"): RGB {
   const split = hex.match(new RegExp("[0-9A-Fa-f]{1,2}", "g"));

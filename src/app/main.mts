@@ -1,5 +1,5 @@
 import { CreateApplication } from "@digital-alchemy/core";
-import { LIB_FASTIFY } from "@digital-alchemy/fastify-extension";
+import { LIB_HTTP } from "@digital-alchemy/fastify-extension";
 
 import { LIB_MATRIX_RENDERING } from "../index.mts";
 import {
@@ -12,7 +12,6 @@ import {
 import {
   BorderSpinQueueExtension,
   Countdown,
-  FastifyPlugins,
   Image,
   MatrixInstance,
   Pixel,
@@ -25,11 +24,10 @@ import {
 
 const PI_MATRIX = CreateApplication({
   configuration: {},
-  libraries: [LIB_FASTIFY, LIB_MATRIX_RENDERING],
+  libraries: [LIB_HTTP, LIB_MATRIX_RENDERING],
   name: "pi_matrix_app",
   services: {
     AnimationController,
-    FastifyPlugins,
     MatrixController,
     PixelController,
     SoundController,

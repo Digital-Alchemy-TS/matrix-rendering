@@ -1,19 +1,14 @@
+import { Type } from "@sinclair/typebox";
+
 import { ColorSetter } from "../render-widget.dto.mts";
 
-export interface PulseLaserOptions {
-  /**
-   * One color for each vertical line
-   */
-  beam: ColorSetter[];
-  brightness: number;
-  /**
-   * Vertical panel row
-   */
-  row: number;
-  step1Color: ColorSetter;
-  type: "pulse-laser";
-  /**
-   * Top most position of the beam
-   */
-  y: number;
-}
+export const PulseLaserOptions = Type.Object({
+  beam: Type.Array(ColorSetter),
+  brightness: Type.Number(),
+  row: Type.Number(),
+  step1Color: ColorSetter,
+  type: Type.Literal("pulse-laser"),
+  y: Type.Number(),
+});
+
+export type PulseLaserOptions = typeof PulseLaserOptions.static;

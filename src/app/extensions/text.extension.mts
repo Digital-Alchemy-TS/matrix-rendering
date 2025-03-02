@@ -65,12 +65,12 @@ export function Text({
         font.height(),
         pi_matrix_app.instance.instance.width(),
         pi_matrix_app.instance.instance.height(),
-        widget.horizontal ?? HorizontalAlignment.Left,
-        widget.vertical ?? VerticalAlignment.Top,
+        (widget.horizontal ?? "left") as HorizontalAlignment,
+        (widget.vertical ?? "top") as VerticalAlignment,
       );
       pi_matrix_app.instance.instance
         .font(font)
-        .fgColor(widget.color ?? Colors.White)
+        .fgColor((widget.color ?? Colors.White) as number)
         .brightness(matrix_rendering.math.containBrightness(widget.brightness));
 
       glyphs.forEach(({ x, y, char }) =>

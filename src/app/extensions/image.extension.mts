@@ -50,9 +50,9 @@ export async function Image({ logger, pi_matrix_app, config, lifecycle, event }:
   const execa = (await import("execa")).execa;
   const animationCancel = new Set<() => void>();
 
-  lifecycle.onPostConfig(() => {
-    // mkdirSync(cacheDirectory, { recursive: true });
-  });
+  // lifecycle.onPostConfig(() => {
+  //   // mkdirSync(cacheDirectory, { recursive: true });
+  // });
   event.on(UNLOAD_WIDGETS, () => {
     animationCancel.forEach(i => {
       i();
@@ -134,7 +134,8 @@ export async function Image({ logger, pi_matrix_app, config, lifecycle, event }:
       return true;
     },
 
-    render(path: string, { x = START, y = START, ...options }: ImageWidgetDTO): void {
+    render(path: string, options: ImageWidgetDTO): void {
+      const { x = START, y = START } = options;
       const key = IMAGE_CACHE(options);
       const grid = image.renderCache.get(key);
       if (!grid) {

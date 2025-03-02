@@ -1,9 +1,7 @@
 import { TServiceParams } from "@digital-alchemy/core";
-import { hrtime } from "process";
 import { LedMatrixInstance } from "rpi-led-matrix";
 
 import { SetPixelGrid } from "../../index.mts";
-import { msOffset, RENDER_DURATION_HISTOGRAM } from "../helpers/metrics.mts";
 const OFF = { b: 0, g: 0, r: 0 };
 export function Pixel({ pi_matrix_app, matrix_rendering }: TServiceParams) {
   /**
@@ -23,7 +21,6 @@ export function Pixel({ pi_matrix_app, matrix_rendering }: TServiceParams) {
     },
     setGrid({ grid, palette, clear }: SetPixelGrid): void {
       pi_matrix_app.render.renderMode = "pixel";
-      const start = hrtime();
       if (clear !== false) {
         pi_matrix_app.instance.instance.clear();
       }
@@ -31,8 +28,6 @@ export function Pixel({ pi_matrix_app, matrix_rendering }: TServiceParams) {
         row.forEach((color, COL) => pixel(COL, ROW).fgColor(palette[color] ?? OFF)),
       );
       pi_matrix_app.instance.instance.sync();
-      const durationInMilliseconds = msOffset(start);
-      RENDER_DURATION_HISTOGRAM.labels({ type: "pixel" }).observe(durationInMilliseconds);
     },
   };
 }

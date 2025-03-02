@@ -1,7 +1,5 @@
 import { TServiceParams } from "@digital-alchemy/core";
 
-import { MATRIX_RENDER_IMMEDIATE } from "../helpers/metrics.mts";
-
 export const AFTER_SYNC = "after-sync";
 export type tAfterSync = (arguments_: { dt: number; t: number }) => boolean | Promise<boolean>;
 
@@ -55,7 +53,6 @@ export function RenderExtension({
       if (isRendering) {
         logger.trace("setting [renderImmediate]");
         renderImmediate = true;
-        MATRIX_RENDER_IMMEDIATE.inc();
         return;
       }
       if (render.renderMode === "widget") {

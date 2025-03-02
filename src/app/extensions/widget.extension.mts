@@ -25,7 +25,10 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     x = EMPTY,
     y = EMPTY,
   }: CircleWidgetDTO): void {
-    pi_matrix_app.instance.instance.fgColor(color).brightness(brightness).drawCircle(x, y, r);
+    pi_matrix_app.instance.instance
+      .fgColor(color as number)
+      .brightness(brightness)
+      .drawCircle(x, y, r);
   }
 
   function renderCountdown({
@@ -52,7 +55,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     y = EMPTY,
   }: LineWidgetDTO): void {
     pi_matrix_app.instance.instance
-      .fgColor(color)
+      .fgColor(color as number)
       .brightness(brightness)
       .drawLine(Number(x), Number(y), Number(endX), Number(endY));
   }
@@ -66,7 +69,7 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
     x = EMPTY,
     y = EMPTY,
   }: RectangleWidgetDTO): void {
-    pi_matrix_app.instance.instance.fgColor(color).brightness(brightness);
+    pi_matrix_app.instance.instance.fgColor(color as number).brightness(brightness);
     if (fill === "solid") {
       // ? Keeping the interface consistent
       pi_matrix_app.instance.instance.fill(x, y, x + width, y + height);
@@ -94,10 +97,13 @@ export function Widget({ event, pi_matrix_app, logger }: TServiceParams) {
       font.height(),
       pi_matrix_app.instance.instance.width(),
       pi_matrix_app.instance.instance.height(),
-      horizontal,
-      vertical,
+      horizontal as HorizontalAlignment,
+      vertical as VerticalAlignment,
     );
-    pi_matrix_app.instance.instance.font(font).fgColor(color).brightness(brightness);
+    pi_matrix_app.instance.instance
+      .font(font)
+      .fgColor(color as number)
+      .brightness(brightness);
     glyphs.forEach(({ x, y, char }) =>
       pi_matrix_app.instance.instance.drawText(
         char,

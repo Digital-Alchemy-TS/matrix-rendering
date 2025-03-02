@@ -1,28 +1,19 @@
+import { Type } from "@sinclair/typebox";
+
 import { RGB } from "./index.mts";
 
-/**
- * An attempt at a format that takes into account size as a payload
- */
-export type SetPixelGrid = {
-  /**
-   * Clear the screen first
-   *
-   * > default: `true`
-   */
-  clear?: boolean;
+export type SetPixelGrid = typeof SetPixelGrid.static;
 
-  /**
-   * Text added to debug logs for auditing / debugging, no other functional purpose planned
-   */
-  debug?: string;
-
-  /**
-   * Grid of palette color references
-   */
-  grid: string[][];
-
-  /**
-   * Use single character indexes for palette
-   */
-  palette: Record<string, RGB>;
-};
+export const SetPixelGrid = Type.Object({
+  clear: Type.Optional(Type.Boolean({ default: true, description: "Clear the screen first" })),
+  debug: Type.Optional(
+    Type.String({
+      description:
+        "Text added to debug logs for auditing / debugging, no other functional purpose planned",
+    }),
+  ),
+  grid: Type.Array(Type.Array(Type.String()), { description: "Grid of palette color references" }),
+  palette: Type.Record(Type.String(), RGB, {
+    description: "Use single character indexes for palette",
+  }),
+});

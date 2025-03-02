@@ -1,13 +1,16 @@
+import { Type } from "@sinclair/typebox";
+
 import { ColorSetter } from "../render-widget.dto.mts";
 
-export class BorderSpinOptions {
-  public brightness?: number;
-  public colorA: ColorSetter;
-  public colorB?: ColorSetter;
-  public interval?: number;
-  public padding?: number;
-  public type?: "border-spin";
-}
+export const BorderSpinOptions = Type.Object({
+  brightness: Type.Optional(Type.Number()),
+  colorA: ColorSetter,
+  colorB: Type.Optional(ColorSetter),
+  interval: Type.Optional(Type.Number()),
+  padding: Type.Optional(Type.Number()),
+  type: Type.Literal("border-spin"),
+});
+export type BorderSpinOptions = typeof BorderSpinOptions.static;
 
 export interface BorderSpinTickOptions {
   stop: () => void;
@@ -15,37 +18,21 @@ export interface BorderSpinTickOptions {
 
 export type BorderSpinCallbackOptions = BorderSpinOptions & BorderSpinTickOptions;
 
-export class BorderSpinQueueItem {
-  /**
-   * pause for ms while line is making full border
-   *
-   * @default 0
-   */
-  delayMidpoint?: number;
-  /**
-   * ms to delay before starting
-   *
-   * @default 0
-   */
-  delayStart?: number;
-  options: BorderSpinOptions;
-}
+export const BorderSpinQueueItem = Type.Object({
+  delayMidpoint: Type.Optional(Type.Number({ default: 0 })),
+  delayStart: Type.Optional(Type.Number({ default: 0 })),
+  option: BorderSpinOptions,
+});
+export type BorderSpinQueueItem = typeof BorderSpinQueueItem.static;
 
-export class BorderSpinQueue {
-  /**
-   * > *Default*: "leave"
-   *
-   * ### Leave
-   *
-   * When spins with less padding compete, leave this one in place
-   *
-   * ### Collapse
-   *
-   * When spins of less padding complete, reduce the padding of this to push against outside
-   */
-  public completeMode?: "leave" | "collapse";
-
-  public spins: BorderSpinQueueItem[];
+export const BorderSpinQueue = Type.Object({
+  completeMode: Type.Optional(
+    Type.Union(
+      (["leave", "collapse"] as const).map(i => Type.Literal(i)),
+      { default: "leave" },
+    ),
+  ),
+  spins: Type.Array(BorderSpinQueueItem),
 
   /**
    * > *Default*: "auto"
@@ -72,5 +59,10 @@ export class BorderSpinQueue {
    *
    * If any existing border spins are going wait for them to complete before running this one
    */
-  public type?: "auto" | "replace" | "outside" | "inside" | "queue";
-}
+  type: Type.Optional(
+    Type.Union(
+      (["auto", "replace", "outside", "inside", "queue"] as const).map(i => Type.Literal(i)),
+    ),
+  ),
+});
+export type BorderSpinQueue = typeof BorderSpinQueue.static;
