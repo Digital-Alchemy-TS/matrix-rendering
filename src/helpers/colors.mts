@@ -56,10 +56,11 @@ export const ColorNames = [
   "Yellow",
 ] as const;
 
-export const ColorSetter = Type.Union(
-  [RGB, Type.Number(), ...ColorNames.map(i => Type.Literal(i))],
-  { default: "White" },
-);
+export const ColorSetter = Type.Union([
+  RGB,
+  Type.Number(),
+  ...ColorNames.map(i => Type.Literal(i)),
+]);
 export type ColorSetter = typeof ColorSetter.static;
 
 export function hexToRGB(hex = "000000"): RGB {

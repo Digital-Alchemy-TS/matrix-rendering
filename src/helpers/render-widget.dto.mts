@@ -57,7 +57,6 @@ export const ManualColoring = Type.Composite([
   Type.Object({
     brightness: Type.Optional(
       Type.Number({
-        default: 255,
         maximum: 255,
         minimum: 0,
         multipleOf: 1,
@@ -72,19 +71,9 @@ const BaseText = Type.Composite([
   ManualColoring,
   Type.Object({
     font: Type.Union(FONT_LIST.map(i => Type.Literal(i))),
-    horizontal: Type.Optional(
-      Type.Union(
-        ["left", "right", "center"].map(i => Type.Literal(i)),
-        { default: "left" },
-      ),
-    ),
+    horizontal: Type.Optional(Type.Union(["left", "right", "center"].map(i => Type.Literal(i)))),
     kerning: Type.Number(),
-    vertical: Type.Optional(
-      Type.Union(
-        ["bottom", "middle", "top"].map(i => Type.Literal(i)),
-        { default: "top" },
-      ),
-    ),
+    vertical: Type.Optional(Type.Union(["bottom", "middle", "top"].map(i => Type.Literal(i)))),
   }),
 ]);
 
@@ -141,7 +130,7 @@ export type ImageWidgetDTO = typeof ImageWidgetDTO.static;
 export const GifWidgetDTO = Type.Composite([
   ImageWidgetDTO,
   Type.Object({
-    interval: Type.Optional(Type.Number({ default: 100, description: "ms" })),
+    interval: Type.Optional(Type.Number({ description: "ms" })),
   }),
 ]);
 export type GifWidgetDTO = typeof GifWidgetDTO.static;

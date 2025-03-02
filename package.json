@@ -29,7 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@digital-alchemy/core": "^25.2.2",
-    "@digital-alchemy/fastify-extension": "^25.3.2",
+    "@digital-alchemy/fastify-extension": "^25.3.3",
     "@sinclair/typebox": "^0.34.28",
     "dayjs": "^1.11.13",
     "execa": "^9.5.2",

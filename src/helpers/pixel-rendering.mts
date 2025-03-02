@@ -5,7 +5,7 @@ import { RGB } from "./index.mts";
 export type SetPixelGrid = typeof SetPixelGrid.static;
 
 export const SetPixelGrid = Type.Object({
-  clear: Type.Optional(Type.Boolean({ default: true, description: "Clear the screen first" })),
+  clear: Type.Optional(Type.Boolean({ description: "Clear the screen first" })),
   debug: Type.Optional(
     Type.String({
       description:

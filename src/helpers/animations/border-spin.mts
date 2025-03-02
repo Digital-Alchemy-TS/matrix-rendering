@@ -19,18 +19,15 @@ export interface BorderSpinTickOptions {
 export type BorderSpinCallbackOptions = BorderSpinOptions & BorderSpinTickOptions;
 
 export const BorderSpinQueueItem = Type.Object({
-  delayMidpoint: Type.Optional(Type.Number({ default: 0 })),
-  delayStart: Type.Optional(Type.Number({ default: 0 })),
+  delayMidpoint: Type.Optional(Type.Number({})),
+  delayStart: Type.Optional(Type.Number({})),
   option: BorderSpinOptions,
 });
 export type BorderSpinQueueItem = typeof BorderSpinQueueItem.static;
 
 export const BorderSpinQueue = Type.Object({
   completeMode: Type.Optional(
-    Type.Union(
-      (["leave", "collapse"] as const).map(i => Type.Literal(i)),
-      { default: "leave" },
-    ),
+    Type.Union((["leave", "collapse"] as const).map(i => Type.Literal(i))),
   ),
   spins: Type.Array(BorderSpinQueueItem),
 

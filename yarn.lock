@@ -978,9 +978,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@digital-alchemy/fastify-extension@npm:^25.3.2":
-  version: 25.3.2
-  resolution: "@digital-alchemy/fastify-extension@npm:25.3.2"
+"@digital-alchemy/fastify-extension@npm:^25.3.3":
+  version: 25.3.3
+  resolution: "@digital-alchemy/fastify-extension@npm:25.3.3"
   dependencies:
     "@fastify/cors": "npm:^11.0.0"
     "@fastify/helmet": "npm:^13.0.1"
@@ -991,7 +991,7 @@ __metadata:
     "@digital-alchemy/core": "*"
     dayjs: ^1
     fastify: ^5.0.0
-  checksum: 10/c465f4ea75f958392380cfb10fb95e52ed4031934909b0c3168c68d90e0b530ed16c236bb9d79179bd33c887980ac49e9c5496dca4f081b1069641fed66c5503
+  checksum: 10/bff2bd53de43110cebe1defbdd5be2283f05f97382835ca2728886c6a96e253e6b98de98965c32ca0dead9485d3d873fe50becf9a62065e782c01d07b74c40c6
   languageName: node
   linkType: hard
 
@@ -1001,7 +1001,7 @@ __metadata:
   dependencies:
     "@cspell/eslint-plugin": "npm:^8.17.5"
     "@digital-alchemy/core": "npm:^25.2.2"
-    "@digital-alchemy/fastify-extension": "npm:^25.3.2"
+    "@digital-alchemy/fastify-extension": "npm:^25.3.3"
     "@eslint/compat": "npm:^1.2.7"
     "@eslint/eslintrc": "npm:^3.3.0"
     "@eslint/js": "npm:^9.21.0"
